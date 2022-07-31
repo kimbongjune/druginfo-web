@@ -3,15 +3,25 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<!-- Root Context: defines shared resources visible to all other web components -->
+    <bean id="environmentVariablesConfiguration" class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
+        <property name="algorithm" value="PBEWITHMD5ANDTRIPLEDES"/>
+        <property name="password" value="bs"/>
+    </bean>
+    <bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+        <property name="config" ref="environmentVariablesConfiguration"/>
+    </bean>
+    <bean id="propertyConfig" class="org.jasypt.spring31.properties.EncryptablePropertyPlaceholderConfigurer">
+        <constructor-arg ref="configurationEncryptor"/>
+        <property name="location" value="classpath:/globals.properties"/>
+    </bean>
+    
 	<bean id="dataSource"
         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
-        <property name="url"
-            value="jdbc:mysql://127.0.0.1:3306/druginfo?useSSL=false&amp;serverTimezone=UTC">
+        <property name="driverClassName" value="${db.aws.driver}"></property>
+        <property name="url" value="${db.aws.url}">
         </property>
-        <property name="username" value="root"></property>
-        <property name="password" value="ezen"></property>
+        <property name="username" value="${db.aws.user}"></property>
+        <property name="password" value="${db.aws.password}"></property>
     </bean>        
     
        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
