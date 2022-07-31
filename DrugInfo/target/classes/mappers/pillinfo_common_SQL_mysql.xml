@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+    <resultMap id="PillInfoVO" type="PillInfoVO">
+    	<result property="id" column="id" />
+        <result property="ITEM_SEQ" column="ITEM_SEQ" />
+        <result property="ITEM_NAME" column="ITEM_NAME" />
+        <result property="ENTP_SEQ" column="ENTP_SEQ" />
+        <result property="ENTP_NAME" column="ENTP_NAME" />
+        <result property="CHART" column="CHART" />
+        <result property="ITEM_IMAGE" column="ITEM_IMAGE" />
+        <result property="PRINT_FRONT" column="PRINT_FRONT" />
+        <result property="PRINT_BACK" column="PRINT_BACK" />
+        <result property="DRUG_SHAPE" column="DRUG_SHAPE" />
+        <result property="COLOR_CLASS1" column="COLOR_CLASS1" />
+        <result property="COLOR_CLASS2" column="COLOR_CLASS2" />
+        <result property="LINE_FRONT" column="LINE_FRONT" />
+        <result property="LINE_BACK" column="LINE_BACK" />
+        <result property="LENG_LONG" column="LENG_LONG" />
+        <result property="LENG_SHORT" column="LENG_SHORT" />
+        <result property="THICK" column="THICK" />
+        <result property="IMG_REGIST_TS" column="IMG_REGIST_TS" />
+        <result property="CLASS_NO" column="CLASS_NO" />
+        <result property="CLASS_NAME" column="CLASS_NAME" />
+        <result property="ETC_OTC_NAME" column="ETC_OTC_NAME" />
+        <result property="ITEM_PERMIT_DATE" column="ITEM_PERMIT_DATE" />
+        <result property="FORM_CODE_NAME" column="FORM_CODE_NAME" />
+        <result property="MARK_CODE_FRONT_ANAL" column="MARK_CODE_FRONT_ANAL" />
+        <result property="MARK_CODE_BACK_ANAL" column="MARK_CODE_BACK_ANAL" />
+        <result property="MARK_CODE_FRONT_IMG" column="MARK_CODE_FRONT_IMG" />
+        <result property="MARK_CODE_BACK_IMG" column="MARK_CODE_BACK_IMG" />
+        <result property="ITEM_ENG_NAME" column="ITEM_ENG_NAME" />
+        <result property="CHANGE_DATE" column="CHANGE_DATE" />
+        <result property="MARK_CODE_FRONT" column="MARK_CODE_FRONT" />
+        <result property="MARK_CODE_BACK" column="MARK_CODE_BACK" />
+        <result property="EDI_CODE" column="EDI_CODE" />
+    </resultMap>
+    
+   <select id="selectPillInfoListAll" parameterType="PillInfoVO" resultMap="PillInfoVO" >
+        SELECT
+             id, ITEM_SEQ, ITEM_NAME, ENTP_SEQ, ENTP_NAME, CHART, ITEM_IMAGE, PRINT_FRONT, PRINT_BACK, DRUG_SHAPE, COLOR_CLASS1, COLOR_CLASS2, LINE_FRONT,
+             LINE_BACK, LENG_LONG, LENG_SHORT, THICK, IMG_REGIST_TS, CLASS_NO, CLASS_NAME, ETC_OTC_NAME, ITEM_PERMIT_DATE, FORM_CODE_NAME, MARK_CODE_FRONT_ANAL,
+             MARK_CODE_BACK_ANAL, MARK_CODE_FRONT_IMG, MARK_CODE_BACK_IMG, ITEM_ENG_NAME, CHANGE_DATE, MARK_CODE_FRONT, MARK_CODE_BACK, EDI_CODE
+        FROM
+            MdcinGrnIdntfcInfoList
+    </select>
+    
+    <insert id="insertPillInfoOne" parameterType="PillInfoVO">
+    	insert into MdcinGrnIdntfcInfoList
+		(
+			ITEM_SEQ,
+			ITEM_NAME, 
+			ENTP_SEQ, 
+			ENTP_NAME, 
+			CHART, 
+			ITEM_IMAGE, 
+			PRINT_FRONT, 
+			PRINT_BACK, 
+			DRUG_SHAPE, 
+			COLOR_CLASS1, 
+			COLOR_CLASS2, 
+			LINE_FRONT,
+            LINE_BACK, 
+            LENG_LONG, 
+            LENG_SHORT, 
+            THICK, 
+            IMG_REGIST_TS, 
+            CLASS_NO, 
+            CLASS_NAME, 
+            ETC_OTC_NAME, 
+            ITEM_PERMIT_DATE,
+            FORM_CODE_NAME,
+            MARK_CODE_FRONT_ANAL,
+            MARK_CODE_BACK_ANAL,
+            MARK_CODE_FRONT_IMG, 
+            MARK_CODE_BACK_IMG, 
+            ITEM_ENG_NAME, 
+            CHANGE_DATE, 
+            MARK_CODE_FRONT, 
+            MARK_CODE_BACK, 
+            EDI_CODE
+		) values
+		(
+			#{ITEM_SEQ},
+			#{ITEM_NAME},
+			#{ENTP_SEQ},
+			#{ENTP_NAME},
+			#{CHART},
+			#{ITEM_IMAGE},
+			#{PRINT_FRONT},
+			#{PRINT_BACK},
+			#{DRUG_SHAPE},
+			#{COLOR_CLASS1},
+			#{COLOR_CLASS2},
+			#{LINE_FRONT},
+			#{LINE_BACK},
+			#{LENG_LONG},
+			#{LENG_SHORT},
+			#{THICK},
+			#{IMG_REGIST_TS},
+			#{CLASS_NO},
+			#{CLASS_NAME},
+			#{ETC_OTC_NAME},
+			#{ITEM_PERMIT_DATE},
+			#{FORM_CODE_NAME},
+			#{MARK_CODE_FRONT_ANAL},
+			#{MARK_CODE_BACK_ANAL},
+			#{MARK_CODE_FRONT_IMG},
+			#{MARK_CODE_BACK_IMG},
+			#{ITEM_ENG_NAME},
+			#{CHANGE_DATE},
+			#{MARK_CODE_FRONT},
+			#{MARK_CODE_BACK},
+			#{EDI_CODE}
+		)
+    </insert>
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+    <resultMap id="DrugDetailInfoVO" type="DrugDetailInfoVO">
+    	<result property="ITEM_SEQ" column="ITEM_SEQ" />
+    	<result property="ITEM_NAME" column="ITEM_NAME" />
+    	<result property="ENTP_NAME" column="ENTP_NAME" />
+    	<result property="BAR_CODE" column="BAR_CODE" />
+    	<result property="UD_DOC_ID" column="UD_DOC_ID" />
+    	<result property="STORAGE_METHOD" column="STORAGE_METHOD" />
+    	<result property="VALID_TERM" column="VALID_TERM" />
+    	<result property="EDI_CODE" column="EDI_CODE" />
+    	<result property="WARNING_TEXT" column="WARNING_TEXT" />
+    	<result property="NO_INJECT" column="NO_INJECT" />
+    	<result property="CAUTION_INJECT" column="CAUTION_INJECT" />
+    	<result property="ALLERGY_REACTION" column="ALLERGY_REACTION" />
+    	<result property="GENERAL_CAUTION" column="GENERAL_CAUTION" />
+    	<result property="MULTIE_INJECT_WARNING" column="MULTIE_INJECT_WARNING" />
+    	<result property="PREGNANT_WOMEN_INJECT_WARNING" column="PREGNANT_WOMEN_INJECT_WARNING" />
+    	<result property="LACTIATION_WOMEN_INJECT_WARNING" column="LACTIATION_WOMEN_INJECT_WARNING" />
+    	<result property="CHILD_INJECT_WARNING" column="CHILD_INJECT_WARNING" />
+    	<result property="OLDMAN_INJECT_WARNING" column="OLDMAN_INJECT_WARNING" />
+    	<result property="PREGNANT_WOMEN_WITH_LACTIATION_WOMEN_WARNING" column="PREGNANT_WOMEN_WITH_LACTIATION_WOMEN_WARNING" />
+    	<result property="OVERDOSE_TREATMENT" column="OVERDOSE_TREATMENT" />
+    	<result property="DOSE_CAUTION" column="DOSE_CAUTION" />
+    	<result property="BEFORE_CONSULT_DOCTOR" column="BEFORE_CONSULT_DOCTOR" />
+    	<result property="AFTER_CONSULT_DOCTOR" column="AFTER_CONSULT_DOCTOR" />
+    	<result property="INTERACTION_CAUTION" column="INTERACTION_CAUTION" />
+    	<result property="EXTRA_CAUTION" column="EXTRA_CAUTION" />
+    </resultMap>
+    
+   <select id="selectDrugDetailInfoListAll" parameterType="DrugDetailInfoVO" resultMap="DrugDetailInfoVO" >
+        SELECT
+        	ITEM_SEQ, ITEM_NAME, ENTP_NAME, BAR_CODE, UD_DOC_ID, STORAGE_METHOD, VALID_TERM, EDI_CODE, WARNING_TEXT, NO_INJECT, CAUTION_INJECT, ALLERGY_REACTION,
+        	GENERAL_CAUTION, MULTIE_INJECT_WARNING, PREGNANT_WOMEN_INJECT_WARNING, LACTIATION_WOMEN_INJECT_WARNING, CHILD_INJECT_WARNING, OLDMAN_INJECT_WARNING, PREGNANT_WOMEN_WITH_LACTIATION_WOMEN_WARNING,
+        	OVERDOSE_TREATMENT, DOSE_CAUTION, BEFORE_CONSULT_DOCTOR, AFTER_CONSULT_DOCTOR, INTERACTION_CAUTION, EXTRA_CAUTION
+        FROM
+            drugPrdtPrmsnDtlInq
+    </select>
+    
+    <insert id="insertDrugDetailInfoOne" parameterType="DrugDetailInfoVO">
+    	insert IGNORE into drugPrdtPrmsnDtlInq
+		(
+			ITEM_SEQ, 
+			ITEM_NAME, 
+			ENTP_NAME, 
+			BAR_CODE, 
+			UD_DOC_ID, 
+			STORAGE_METHOD,
+			VALID_TERM, 
+			EDI_CODE, 
+			WARNING_TEXT, 
+			NO_INJECT, 
+			CAUTION_INJECT, 
+			ALLERGY_REACTION,
+        	GENERAL_CAUTION, 
+        	MULTIE_INJECT_WARNING, 
+        	PREGNANT_WOMEN_INJECT_WARNING, 
+        	LACTIATION_WOMEN_INJECT_WARNING,
+        	CHILD_INJECT_WARNING, 
+        	OLDMAN_INJECT_WARNING, 
+        	PREGNANT_WOMEN_WITH_LACTIATION_WOMEN_WARNING,
+        	OVERDOSE_TREATMENT, 
+        	DOSE_CAUTION, 
+        	BEFORE_CONSULT_DOCTOR, 
+        	AFTER_CONSULT_DOCTOR,
+        	INTERACTION_CAUTION,
+        	EXTRA_CAUTION
+		) values
+		(
+			#{ITEM_SEQ},
+			#{ITEM_NAME},
+			#{ENTP_NAME},
+			#{BAR_CODE},
+			#{UD_DOC_ID},
+			#{STORAGE_METHOD},
+			#{VALID_TERM},
+			#{EDI_CODE},
+			#{WARNING_TEXT, jdbcType=VARCHAR},
+			#{NO_INJECT, jdbcType=VARCHAR},
+			#{CAUTION_INJECT, jdbcType=VARCHAR},
+			#{ALLERGY_REACTION, jdbcType=VARCHAR},
+			#{GENERAL_CAUTION, jdbcType=VARCHAR},
+			#{MULTIE_INJECT_WARNING, jdbcType=VARCHAR},
+			#{PREGNANT_WOMEN_INJECT_WARNING, jdbcType=VARCHAR},
+			#{LACTIATION_WOMEN_INJECT_WARNING, jdbcType=VARCHAR},
+			#{CHILD_INJECT_WARNING, jdbcType=VARCHAR},
+			#{OLDMAN_INJECT_WARNING, jdbcType=VARCHAR},
+			#{PREGNANT_WOMEN_WITH_LACTIATION_WOMEN_WARNING, jdbcType=VARCHAR},
+			#{OVERDOSE_TREATMENT, jdbcType=VARCHAR},
+			#{DOSE_CAUTION, jdbcType=VARCHAR},
+			#{BEFORE_CONSULT_DOCTOR, jdbcType=VARCHAR},
+			#{AFTER_CONSULT_DOCTOR, jdbcType=VARCHAR},
+			#{INTERACTION_CAUTION, jdbcType=VARCHAR},
+			#{EXTRA_CAUTION, jdbcType=VARCHAR}
+		)
+    </insert>
+</mapper>
