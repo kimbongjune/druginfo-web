@@ -10,7 +10,7 @@
 	</settings>
 	<typeAliases>
 		<!-- 의약품 정보 -->
-    	<typeAlias alias="DruginfoVO" type="com.nocdu.druginfo.vo.DrugInfoVO"/>
+    	<typeAlias alias="DruginfoVO" type="com.nocdu.druginfo.druginfo.vo.DrugInfoVO"/>
     	
     	<!-- 의약품 모양 정보 -->
     	<typeAlias alias="PillInfoVO" type="com.nocdu.druginfo.pillinfo.vo.PillInfoVO"/>

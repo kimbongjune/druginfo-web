@@ -20,4 +20,12 @@ public interface DrugDetailInfoDAO {
      * @exception Exception
      */
     public int insertDrugDetailInfoOne(DrugDetailInfoVO vo) throws Exception;
+    
+    /**
+     * 의약품 상세 정보리스트 객체를 신규 등록한다.
+     * @param drugDetailInfoList List
+     * @return
+     * @exception Exception
+     */
+    public int insertDrugDetailInfoList(List<?> drugDetailInfoList) throws Exception;
 }

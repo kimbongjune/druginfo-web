@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admin">
     <resultMap id="PillInfoVO" type="PillInfoVO">
-    	<result property="id" column="id" />
+    	<result property="id" column="ID" />
         <result property="ITEM_SEQ" column="ITEM_SEQ" />
         <result property="ITEM_NAME" column="ITEM_NAME" />
         <result property="ENTP_SEQ" column="ENTP_SEQ" />
@@ -38,7 +38,7 @@
     
    <select id="selectPillInfoListAll" parameterType="PillInfoVO" resultMap="PillInfoVO" >
         SELECT
-             id, ITEM_SEQ, ITEM_NAME, ENTP_SEQ, ENTP_NAME, CHART, ITEM_IMAGE, PRINT_FRONT, PRINT_BACK, DRUG_SHAPE, COLOR_CLASS1, COLOR_CLASS2, LINE_FRONT,
+             ID, ITEM_SEQ, ITEM_NAME, ENTP_SEQ, ENTP_NAME, CHART, ITEM_IMAGE, PRINT_FRONT, PRINT_BACK, DRUG_SHAPE, COLOR_CLASS1, COLOR_CLASS2, LINE_FRONT,
              LINE_BACK, LENG_LONG, LENG_SHORT, THICK, IMG_REGIST_TS, CLASS_NO, CLASS_NAME, ETC_OTC_NAME, ITEM_PERMIT_DATE, FORM_CODE_NAME, MARK_CODE_FRONT_ANAL,
              MARK_CODE_BACK_ANAL, MARK_CODE_FRONT_IMG, MARK_CODE_BACK_IMG, ITEM_ENG_NAME, CHANGE_DATE, MARK_CODE_FRONT, MARK_CODE_BACK, EDI_CODE
         FROM
@@ -113,5 +113,76 @@
 			#{MARK_CODE_BACK},
 			#{EDI_CODE}
 		)
+    </insert>
+    <insert id="insertPillInfoList" parameterType="java.util.List">
+    	insert into MdcinGrnIdntfcInfoList
+		(
+			ITEM_SEQ,
+			ITEM_NAME, 
+			ENTP_SEQ, 
+			ENTP_NAME, 
+			CHART, 
+			ITEM_IMAGE, 
+			PRINT_FRONT, 
+			PRINT_BACK, 
+			DRUG_SHAPE, 
+			COLOR_CLASS1, 
+			COLOR_CLASS2, 
+			LINE_FRONT,
+            LINE_BACK, 
+            LENG_LONG, 
+            LENG_SHORT, 
+            THICK, 
+            IMG_REGIST_TS, 
+            CLASS_NO, 
+            CLASS_NAME, 
+            ETC_OTC_NAME, 
+            ITEM_PERMIT_DATE,
+            FORM_CODE_NAME,
+            MARK_CODE_FRONT_ANAL,
+            MARK_CODE_BACK_ANAL,
+            MARK_CODE_FRONT_IMG, 
+            MARK_CODE_BACK_IMG, 
+            ITEM_ENG_NAME, 
+            CHANGE_DATE, 
+            MARK_CODE_FRONT, 
+            MARK_CODE_BACK, 
+            EDI_CODE
+		) values
+		<foreach collection="list" item="item" separator=",">
+			(
+				#{item.ITEM_SEQ},
+				#{item.ITEM_NAME},
+				#{item.ENTP_SEQ},
+				#{item.ENTP_NAME},
+				#{item.CHART},
+				#{item.ITEM_IMAGE},
+				#{item.PRINT_FRONT},
+				#{item.PRINT_BACK},
+				#{item.DRUG_SHAPE},
+				#{item.COLOR_CLASS1},
+				#{item.COLOR_CLASS2},
+				#{item.LINE_FRONT},
+				#{item.LINE_BACK},
+				#{item.LENG_LONG},
+				#{item.LENG_SHORT},
+				#{item.THICK},
+				#{item.IMG_REGIST_TS},
+				#{item.CLASS_NO},
+				#{item.CLASS_NAME},
+				#{item.ETC_OTC_NAME},
+				#{item.ITEM_PERMIT_DATE},
+				#{item.FORM_CODE_NAME},
+				#{item.MARK_CODE_FRONT_ANAL},
+				#{item.MARK_CODE_BACK_ANAL},
+				#{item.MARK_CODE_FRONT_IMG},
+				#{item.MARK_CODE_BACK_IMG},
+				#{item.ITEM_ENG_NAME},
+				#{item.CHANGE_DATE},
+				#{item.MARK_CODE_FRONT},
+				#{item.MARK_CODE_BACK},
+				#{item.EDI_CODE}
+			)
+        </foreach>
     </insert>
 </mapper>

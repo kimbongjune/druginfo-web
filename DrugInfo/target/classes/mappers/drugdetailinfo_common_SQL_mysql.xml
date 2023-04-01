@@ -95,4 +95,64 @@
 			#{EXTRA_CAUTION, jdbcType=VARCHAR}
 		)
     </insert>
+    
+    <insert id="insertDrugDetailInfoList" parameterType="java.util.List">
+    	insert IGNORE into drugPrdtPrmsnDtlInq
+		(
+			ITEM_SEQ, 
+			ITEM_NAME, 
+			ENTP_NAME, 
+			BAR_CODE, 
+			UD_DOC_ID, 
+			STORAGE_METHOD,
+			VALID_TERM, 
+			EDI_CODE, 
+			WARNING_TEXT, 
+			NO_INJECT, 
+			CAUTION_INJECT, 
+			ALLERGY_REACTION,
+        	GENERAL_CAUTION, 
+        	MULTIE_INJECT_WARNING, 
+        	PREGNANT_WOMEN_INJECT_WARNING, 
+        	LACTIATION_WOMEN_INJECT_WARNING,
+        	CHILD_INJECT_WARNING, 
+        	OLDMAN_INJECT_WARNING, 
+        	PREGNANT_WOMEN_WITH_LACTIATION_WOMEN_WARNING,
+        	OVERDOSE_TREATMENT, 
+        	DOSE_CAUTION, 
+        	BEFORE_CONSULT_DOCTOR, 
+        	AFTER_CONSULT_DOCTOR,
+        	INTERACTION_CAUTION,
+        	EXTRA_CAUTION
+		) values
+		<foreach collection="list" item="item" separator=",">
+			(
+				#{item.ITEM_SEQ},
+				#{item.ITEM_NAME},
+				#{item.ENTP_NAME},
+				#{item.BAR_CODE},
+				#{item.UD_DOC_ID},
+				#{item.STORAGE_METHOD},
+				#{item.VALID_TERM},
+				#{item.EDI_CODE},
+				#{item.WARNING_TEXT, jdbcType=VARCHAR},
+				#{item.NO_INJECT, jdbcType=VARCHAR},
+				#{item.CAUTION_INJECT, jdbcType=VARCHAR},
+				#{item.ALLERGY_REACTION, jdbcType=VARCHAR},
+				#{item.GENERAL_CAUTION, jdbcType=VARCHAR},
+				#{item.MULTIE_INJECT_WARNING, jdbcType=VARCHAR},
+				#{item.PREGNANT_WOMEN_INJECT_WARNING, jdbcType=VARCHAR},
+				#{item.LACTIATION_WOMEN_INJECT_WARNING, jdbcType=VARCHAR},
+				#{item.CHILD_INJECT_WARNING, jdbcType=VARCHAR},
+				#{item.OLDMAN_INJECT_WARNING, jdbcType=VARCHAR},
+				#{item.PREGNANT_WOMEN_WITH_LACTIATION_WOMEN_WARNING, jdbcType=VARCHAR},
+				#{item.OVERDOSE_TREATMENT, jdbcType=VARCHAR},
+				#{item.DOSE_CAUTION, jdbcType=VARCHAR},
+				#{item.BEFORE_CONSULT_DOCTOR, jdbcType=VARCHAR},
+				#{item.AFTER_CONSULT_DOCTOR, jdbcType=VARCHAR},
+				#{item.INTERACTION_CAUTION, jdbcType=VARCHAR},
+				#{item.EXTRA_CAUTION, jdbcType=VARCHAR}
+			)
+        </foreach>
+    </insert>
 </mapper>

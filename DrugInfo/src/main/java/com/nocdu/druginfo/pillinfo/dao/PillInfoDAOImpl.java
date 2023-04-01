@@ -28,4 +28,10 @@ public class PillInfoDAOImpl implements PillInfoDAO {
 		// TODO Auto-generated method stub
 		return sql.insert(namespace+".insertPillInfoOne", vo);
 	}
+
+	@Override
+	public int insertPillInfoList(List<?> pillInfoList) throws Exception {
+		// TODO Auto-generated method stub
+		return sql.insert(namespace+".insertPillInfoList", pillInfoList);
+	}
 }

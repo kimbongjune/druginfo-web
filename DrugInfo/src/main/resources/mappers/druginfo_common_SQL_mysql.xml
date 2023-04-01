@@ -2,20 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admin">
     <resultMap id="DruginfoVO" type="DruginfoVO">
-    	<result property="id" column="id" />
-        <result property="entpName" column="entpName" />
-        <result property="itemName" column="itemName" />
-        <result property="itemSeq" column="itemSeq" />
-        <result property="efcyQesitm" column="efcyQesitm" />
-        <result property="useMethodQesitm" column="useMethodQesitm" />
-        <result property="atpnWarnQesitm" column="atpnWarnQesitm" />
-        <result property="atpnQesitm" column="atpnQesitm" />
-        <result property="intrcQesitm" column="intrcQesitm" />
-        <result property="seQesitm" column="seQesitm" />
-        <result property="depositMethodQesitm" column="depositMethodQesitm" />
-        <result property="openDe" column="openDe" />
-        <result property="updateDe" column="updateDe" />
-        <result property="itemImage" column="itemImage" />
+    	<result property="id" column="ID" />
+        <result property="entpName" column="ENTP_NAME" />
+        <result property="itemName" column="ITEM_NAME" />
+        <result property="itemSeq" column="ITEM_SEQ" />
+        <result property="efcyQesitm" column="EFCY_QESITM" />
+        <result property="useMethodQesitm" column="USE_METHOD_QESITM" />
+        <result property="atpnWarnQesitm" column="ATPN_WARN_QUSITM" />
+        <result property="atpnQesitm" column="ATPN_QESITM" />
+        <result property="intrcQesitm" column="INTRC_QUSITM" />
+        <result property="seQesitm" column="SE_QESITM" />
+        <result property="depositMethodQesitm" column="DEPOSIT_METHOD_QESITM" />
+        <result property="openDe" column="OPEN_DE" />
+        <result property="updateDe" column="UPDATE_DE" />
+        <result property="itemImage" column="ITEM_IMAGE" />
         <result property="total" column="total" />
         <result property="page" column="page" />
         <collection property="drugDetailInfoVO" resultMap="DrugDetailInfoVO"></collection>
@@ -24,7 +24,7 @@
     
    <select id="selectDrugInfoListAll" parameterType="DruginfoVO" resultMap="DruginfoVO" >
         SELECT
-            id, entpName, itemName, itemSeq, efcyQesitm, useMethodQesitm, atpnWarnQesitm, atpnQesitm, intrcQesitm, seQesitm, depositMethodQesitm, openDe, updateDe, itemImage
+            ID, ENTP_NAME, ITEM_NAME, ITEM_SEQ, EFCY_QESITM, USE_METHOD_QESITM, ATPN_WARN_QUSITM, ATPN_QESITM, INTRC_QUSITM, SE_QESITM, DEPOSIT_METHOD_QESITM, OPEN_DE, UPDATE_DE, ITEM_IMAGE
         FROM
             drbeasydruglist
     </select>
@@ -32,19 +32,19 @@
     <insert id="insertDrugInfoOne" parameterType="DruginfoVO">
     	insert into drbeasydruglist
 		(
-			entpName, 
-			itemName, 
-			itemSeq, 
-			efcyQesitm, 
-			useMethodQesitm, 
-			atpnWarnQesitm, 
-			atpnQesitm, 
-			intrcQesitm, 
-			seQesitm, 
-			depositMethodQesitm, 
-			openDe, 
-			updateDe, 
-			itemImage
+			ENTP_NAME, 
+			ITEM_NAME, 
+			ITEM_SEQ, 
+			EFCY_QESITM, 
+			USE_METHOD_QESITM, 
+			ATPN_WARN_QUSITM, 
+			ATPN_QESITM, 
+			INTRC_QUSITM, 
+			SE_QESITM, 
+			DEPOSIT_METHOD_QESITM, 
+			OPEN_DE, 
+			UPDATE_DE, 
+			ITEM_IMAGE
 		) values
 		(
 			#{entpName},
@@ -62,40 +62,75 @@
 			#{itemImage}
 		)
     </insert>
+    <insert id="insertDrugInfoList" parameterType="java.util.List">
+    	insert into drbeasydruglist
+		(
+			ENTP_NAME, 
+			ITEM_NAME, 
+			ITEM_SEQ, 
+			EFCY_QESITM, 
+			USE_METHOD_QESITM, 
+			ATPN_WARN_QUSITM, 
+			ATPN_QESITM, 
+			INTRC_QUSITM, 
+			SE_QESITM, 
+			DEPOSIT_METHOD_QESITM, 
+			OPEN_DE, 
+			UPDATE_DE, 
+			ITEM_IMAGE
+		) values
+			<foreach collection="list" item="item" separator=",">
+				(
+					#{item.entpName},
+					#{item.itemName},
+					#{item.itemSeq},
+					#{item.efcyQesitm},
+					#{item.useMethodQesitm},
+					#{item.atpnWarnQesitm},
+					#{item.atpnQesitm},
+					#{item.intrcQesitm},
+					#{item.seQesitm},
+					#{item.depositMethodQesitm},
+					#{item.openDe},
+					#{item.updateDe},
+					#{item.itemImage}
+				)
+	        </foreach>
+    </insert>
        <select id="selectDrugInfoSearchList" parameterType="DruginfoVO" resultMap="DruginfoVO" >
         SELECT 
-        	a.id, a.entpName, a.itemName, a.itemSeq, a.efcyQesitm, a.useMethodQesitm,b.ITEM_IMAGE, b.CLASS_NAME, 
+        	a.ID, a.ENTP_NAME, a.ITEM_NAME, a.ITEM_SEQ, a.EFCY_QESITM, a.USE_METHOD_QESITM,b.ITEM_IMAGE, b.CLASS_NAME, 
             c.WARNING_TEXT, c.NO_INJECT, c.CAUTION_INJECT, c.ALLERGY_REACTION, c.GENERAL_CAUTION, c.MULTIE_INJECT_WARNING, c.PREGNANT_WOMEN_INJECT_WARNING,
 			c.LACTIATION_WOMEN_INJECT_WARNING, c.CHILD_INJECT_WARNING, c.OLDMAN_INJECT_WARNING, c.PREGNANT_WOMEN_WITH_LACTIATION_WOMEN_WARNING, c.OVERDOSE_TREATMENT, c.DOSE_CAUTION,
 			c.BEFORE_CONSULT_DOCTOR, c.AFTER_CONSULT_DOCTOR, c.INTERACTION_CAUTION, c.EXTRA_CAUTION, c.STORAGE_METHOD, c.VALID_TERM, c.EDI_CODE 
 				from drbeasydruglist as a
 			left join mdcingrnidntfcinfolist as b 
-				on a.itemSeq = b.ITEM_SEQ
+				on a.ITEM_SEQ = b.ITEM_SEQ
 			left join drugprdtprmsndtlinq as c 
-				on a.itemSeq = c.ITEM_SEQ
+				on a.ITEM_SEQ = c.ITEM_SEQ
 			<where>
 				<if test="itemName != null and itemName != ''">
-					and a.itemName like concat('%',#{itemName},'%') or a.entpName like concat('%',#{itemName},'%') or a.efcyQesitm like concat('%',#{itemName},'%')
+					and a.ITEM_NAME like concat('%',#{itemName},'%') or a.ENTP_NAME like concat('%',#{itemName},'%') or a.EFCY_QESITM like concat('%',#{itemName},'%')
 				</if>
 			</where>
 			<choose>
 				<when test="page != null and page != ''">
-					order by a.itemName limit ${page}, 15
+					order by a.ITEM_NAME limit ${page}, 15
 				</when>
 				<otherwise>
-					order by a.itemName limit 0, 15
+					order by a.ITEM_NAME limit 0, 15
 				</otherwise>
 			</choose>
     	</select>
   	   <select id="selectDrugInfoSearchListCnt" parameterType="DruginfoVO" resultType="int" >
 	        select count(*) from drbeasydruglist as a
 			left join mdcingrnidntfcinfolist as b 
-				on a.itemSeq = b.ITEM_SEQ
+				on a.ITEM_SEQ = b.ITEM_SEQ
 			left join drugprdtprmsndtlinq as c 
-				on a.itemSeq = c.ITEM_SEQ
+				on a.ITEM_SEQ = c.ITEM_SEQ
 			<where>
 				<if test="itemName != null and itemName != ''">
-					and a.itemName like concat('%',#{itemName},'%') or a.entpName like concat('%',#{itemName},'%') or a.efcyQesitm like concat('%',#{itemName},'%')
+					and a.ITEM_NAME like concat('%',#{itemName},'%') or a.ENTP_NAME like concat('%',#{itemName},'%') or a.EFCY_QESITM like concat('%',#{itemName},'%')
 				</if>
 			</where>
     	</select>

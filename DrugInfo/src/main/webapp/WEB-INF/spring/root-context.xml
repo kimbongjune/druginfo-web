@@ -16,12 +16,14 @@
     </bean>
     
 	<bean id="dataSource"
-        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="${db.aws.driver}"></property>
-        <property name="url" value="${db.aws.url}">
-        </property>
+        <property name="url" value="${db.aws.url}"></property>
         <property name="username" value="${db.aws.user}"></property>
         <property name="password" value="${db.aws.password}"></property>
+        <property name="validationQuery" value="select 1 from dual" />
+		<property name="testWhileIdle" value="true" />
+		<property name="timeBetweenEvictionRunsMillis" value="600000" />
     </bean>        
     
        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

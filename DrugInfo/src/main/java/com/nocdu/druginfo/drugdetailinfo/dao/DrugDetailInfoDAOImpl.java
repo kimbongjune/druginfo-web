@@ -29,4 +29,10 @@ public class DrugDetailInfoDAOImpl implements DrugDetailInfoDAO {
 		return sql.insert(namespace+".insertDrugDetailInfoOne",vo);
 	}
 
+	@Override
+	public int insertDrugDetailInfoList(List<?> drugDetailInfoList) throws Exception {
+		// TODO Auto-generated method stub
+		return sql.insert(namespace+".insertDrugDetailInfoList",drugDetailInfoList);
+	}
+
 }

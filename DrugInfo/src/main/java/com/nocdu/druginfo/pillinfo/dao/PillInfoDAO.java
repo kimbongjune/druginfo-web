@@ -19,4 +19,12 @@ public interface PillInfoDAO {
      * @exception Exception
      */
     public int insertPillInfoOne(PillInfoVO vo) throws Exception;
+    
+    /**
+     * 의약품 목록리스트 객체를 신규 등록한다.
+     * @param pillInfoList List
+     * @return
+     * @exception Exception
+     */
+    public int insertPillInfoList(List<?> pillInfoList) throws Exception;
 }

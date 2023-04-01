@@ -3,7 +3,6 @@ package com.nocdu.druginfo.pillinfo.service;
 import java.util.List;
 
 import com.nocdu.druginfo.pillinfo.vo.PillInfoVO;
-import com.nocdu.druginfo.vo.DrugInfoVO;
 
 public interface PillInfoService {
     /**
@@ -22,4 +21,12 @@ public interface PillInfoService {
      * @exception Exception
      */
     public int insertPillInfoOne(PillInfoVO vo) throws Exception;
+    
+    /**
+     * 의약품 목록리스트 객체를 신규 등록한다.
+     * @param pillInfoList List
+     * @return
+     * @exception Exception
+     */
+    public int insertPillInfoList(List<?> pillInfoList) throws Exception;
 }

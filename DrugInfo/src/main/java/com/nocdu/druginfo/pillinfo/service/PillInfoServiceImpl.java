@@ -6,10 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.nocdu.druginfo.dao.DrugInfoDAO;
 import com.nocdu.druginfo.pillinfo.dao.PillInfoDAO;
 import com.nocdu.druginfo.pillinfo.vo.PillInfoVO;
-import com.nocdu.druginfo.vo.DrugInfoVO;
 
 @Service("pillInfoServiceImpl")
 public class PillInfoServiceImpl implements PillInfoService {
@@ -28,6 +26,12 @@ public class PillInfoServiceImpl implements PillInfoService {
 	public int insertPillInfoOne(PillInfoVO vo) throws Exception {
 		// TODO Auto-generated method stub
 		return pillInfoDAO.insertPillInfoOne(vo);
+	}
+
+	@Override
+	public int insertPillInfoList(List<?> pillInfoList) throws Exception {
+		// TODO Auto-generated method stub
+		return pillInfoDAO.insertPillInfoList(pillInfoList);
 	}
 	
 

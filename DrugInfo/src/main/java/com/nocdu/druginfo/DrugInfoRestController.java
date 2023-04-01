@@ -19,9 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.nocdu.druginfo.drugdetailinfo.service.DrugDetailInfoServiceImpl;
+import com.nocdu.druginfo.druginfo.vo.DrugInfoVO;
 import com.nocdu.druginfo.pillinfo.service.PillInfoServiceImpl;
-import com.nocdu.druginfo.service.DrugInfoServiceImpl;
-import com.nocdu.druginfo.vo.DrugInfoVO;
 
 @RestController
 @RequestMapping("/drugsearch")
@@ -32,7 +31,7 @@ public class DrugInfoRestController {
 	
     /** **/
     @Resource(name = "drugInfoServiceImpl")
-    private DrugInfoServiceImpl drugInfoServiceImpl;
+    private com.nocdu.druginfo.druginfo.service.DrugInfoServiceImpl drugInfoServiceImpl;
     
     /** **/
     @Resource(name = "pillInfoServiceImpl")

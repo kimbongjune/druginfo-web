@@ -29,5 +29,11 @@ public class DrugDetailInfoServiceImpl implements DrugDetailInfoService {
 		return DrugDetailInfoDAO.insertDrugDetailInfoOne(vo);
 	}
 
+	@Override
+	public int insertDrugDetailInfoList(List<?> drugDetailInfoList) throws Exception {
+		// TODO Auto-generated method stub
+		return DrugDetailInfoDAO.insertDrugDetailInfoList(drugDetailInfoList);
+	}
+
 
 }
