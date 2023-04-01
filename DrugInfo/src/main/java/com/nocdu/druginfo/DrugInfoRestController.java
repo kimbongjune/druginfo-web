@@ -44,7 +44,7 @@ public class DrugInfoRestController {
     @ResponseBody
     @RequestMapping(value= { "/textsearch"},method=RequestMethod.GET)
 	public ModelAndView getDrugTextSearchResult(HttpServletRequest request, HttpSession session,
-			@RequestParam(name="query",value="query",defaultValue="아스피린",required=false) String query,
+			@RequestParam(name="query",value="query", required=false) String query,
 			@RequestParam(name="page",value="page",defaultValue="1",required=false) int page)throws Exception {
 			ModelAndView model = new ModelAndView("jsonView");
 			
@@ -61,7 +61,7 @@ public class DrugInfoRestController {
 			page = (page - 1) * defaltLimitPage;
 			searchParamVO.setPage(page);
 			
-			System.out.println("query = "+query);
+			//System.out.println("query = "+query);
 			System.out.println("page = "+page);
 			Map<String, Object> map = null;
 			
