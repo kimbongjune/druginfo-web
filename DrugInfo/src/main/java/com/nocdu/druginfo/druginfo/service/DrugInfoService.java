@@ -1,8 +1,8 @@
-package com.nocdu.druginfo.service;
+package com.nocdu.druginfo.druginfo.service;
 
 import java.util.List;
 
-import com.nocdu.druginfo.vo.DrugInfoVO;
+import com.nocdu.druginfo.druginfo.vo.DrugInfoVO;
 
 public interface DrugInfoService {
     /**
@@ -21,6 +21,14 @@ public interface DrugInfoService {
      * @exception Exception
      */
     public int insertDrugInfoOne(DrugInfoVO vo) throws Exception;
+    
+    /**
+     * 의약품 목록 리스트 객체를 신규 등록한다.
+     * @param DrugInfoList List
+     * @return
+     * @exception Exception
+     */
+    public int insertDrugInfoList(List<?> DrugInfoList) throws Exception;
     
     
     /**

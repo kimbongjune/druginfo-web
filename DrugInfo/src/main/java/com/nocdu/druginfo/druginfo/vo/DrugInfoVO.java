@@ -1,4 +1,4 @@
-package com.nocdu.druginfo.vo;
+package com.nocdu.druginfo.druginfo.vo;
 
 import com.nocdu.druginfo.drugdetailinfo.vo.DrugDetailInfoVO;
 import com.nocdu.druginfo.pillinfo.vo.PillInfoVO;

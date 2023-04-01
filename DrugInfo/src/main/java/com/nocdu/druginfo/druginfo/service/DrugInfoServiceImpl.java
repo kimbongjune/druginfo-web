@@ -1,4 +1,4 @@
-package com.nocdu.druginfo.service;
+package com.nocdu.druginfo.druginfo.service;
 
 import java.util.List;
 
@@ -6,8 +6,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.nocdu.druginfo.dao.DrugInfoDAO;
-import com.nocdu.druginfo.vo.DrugInfoVO;
+import com.nocdu.druginfo.druginfo.dao.DrugInfoDAO;
+import com.nocdu.druginfo.druginfo.vo.DrugInfoVO;
+
 
 @Service("drugInfoServiceImpl")
 public class DrugInfoServiceImpl implements DrugInfoService {
@@ -26,6 +27,12 @@ public class DrugInfoServiceImpl implements DrugInfoService {
 	public int insertDrugInfoOne(DrugInfoVO vo) throws Exception {
 		// TODO Auto-generated method stub
 		return drugInfoDAO.insertDrugInfoOne(vo);
+	}
+	
+	@Override
+	public int insertDrugInfoList(List<?> DrugInfoList) throws Exception {
+		// TODO Auto-generated method stub
+		return drugInfoDAO.insertDrugInfoList(DrugInfoList);
 	}
 
 	@Override

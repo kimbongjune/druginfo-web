@@ -1,8 +1,9 @@
-package com.nocdu.druginfo.dao;
+package com.nocdu.druginfo.druginfo.dao;
 
 import java.util.List;
 
-import com.nocdu.druginfo.vo.DrugInfoVO;
+import com.nocdu.druginfo.druginfo.vo.DrugInfoVO;
+
 public interface DrugInfoDAO {
     /**
      * 의약품 목록을 전체 조회한다.
@@ -19,6 +20,14 @@ public interface DrugInfoDAO {
      * @exception Exception
      */
     public int insertDrugInfoOne(DrugInfoVO vo) throws Exception;
+    
+    /**
+     * 의약품 목록 리스트 객체를 신규 등록한다.
+     * @param DrugInfoList List
+     * @return
+     * @exception Exception
+     */
+    public int insertDrugInfoList(List<?> DrugInfoList) throws Exception;
     
     /**
      * 의약품 목록 특정 객체를 조회한다.
