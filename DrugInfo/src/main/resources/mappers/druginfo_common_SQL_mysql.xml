@@ -103,22 +103,45 @@
             c.WARNING_TEXT, c.NO_INJECT, c.CAUTION_INJECT, c.ALLERGY_REACTION, c.GENERAL_CAUTION, c.MULTIE_INJECT_WARNING, c.PREGNANT_WOMEN_INJECT_WARNING,
 			c.LACTIATION_WOMEN_INJECT_WARNING, c.CHILD_INJECT_WARNING, c.OLDMAN_INJECT_WARNING, c.PREGNANT_WOMEN_WITH_LACTIATION_WOMEN_WARNING, c.OVERDOSE_TREATMENT, c.DOSE_CAUTION,
 			c.BEFORE_CONSULT_DOCTOR, c.AFTER_CONSULT_DOCTOR, c.INTERACTION_CAUTION, c.EXTRA_CAUTION, c.STORAGE_METHOD, c.VALID_TERM, c.EDI_CODE 
-				from drbeasydruglist as a
-			left join mdcingrnidntfcinfolist as b 
-				on a.ITEM_SEQ = b.ITEM_SEQ
-			left join drugprdtprmsndtlinq as c 
-				on a.ITEM_SEQ = c.ITEM_SEQ
+		FROM 
+			drbeasydruglist as a
+		LEFT JOIN 
+			mdcingrnidntfcinfolist as b 
+		ON a.ITEM_SEQ = b.ITEM_SEQ
+		LEFT JOIN 
+			drugprdtprmsndtlinq as c 
+		ON a.ITEM_SEQ = c.ITEM_SEQ
 			<where>
 				<if test="itemName != null and itemName != ''">
-					and a.ITEM_NAME like concat('%',#{itemName},'%') or a.ENTP_NAME like concat('%',#{itemName},'%') or a.EFCY_QESITM like concat('%',#{itemName},'%')
+					AND a.ITEM_NAME like concat('%',#{itemName},'%') or a.ENTP_NAME like concat('%',#{itemName},'%') or a.EFCY_QESITM like concat('%',#{itemName},'%')
+				</if>
+				<if test="pillInfoVO.DRUG_SHAPE != null and pillInfoVO.DRUG_SHAPE != ''">
+					AND b.DRUG_SHAPE like concat('%',#{pillInfoVO.DRUG_SHAPE},'%')
+				</if>
+				<if test="pillInfoVO.PRINT_FRONT != null and pillInfoVO.PRINT_FRONT != ''">
+					AND b.PRINT_FRONT like concat('%',#{pillInfoVO.PRINT_FRONT},'%')
+				</if>
+				<if test="pillInfoVO.PRINT_BACK != null and pillInfoVO.PRINT_BACK != ''">
+					AND b.PRINT_BACK like concat('%',#{pillInfoVO.PRINT_BACK},'%')
+				</if>
+				<if test="pillInfoVO.FORM_CODE_NAME != null and pillInfoVO.FORM_CODE_NAME != ''">
+					AND b.FORM_CODE_NAME like concat('%',#{pillInfoVO.FORM_CODE_NAME},'%')
+				</if>
+				<if test="pillInfoVO.COLOR_CLASS1 != null and pillInfoVO.COLOR_CLASS1 != ''">
+					AND b.COLOR_CLASS1 like concat('%',#{pillInfoVO.COLOR_CLASS1},'%')
+					OR b.COLOR_CLASS2 like concat('%',#{pillInfoVO.COLOR_CLASS1},'%')
+				</if>
+				<if test="pillInfoVO.LINE_FRONT != null and pillInfoVO.LINE_FRONT != ''">
+					AND b.LINE_FRONT like concat('%',#{pillInfoVO.LINE_FRONT},'%')
+					OR b.LINE_BACK like concat('%',#{pillInfoVO.LINE_FRONT},'%')
 				</if>
 			</where>
 			<choose>
 				<when test="page != null and page != ''">
-					order by a.ITEM_NAME limit ${page}, 15
+					ORDER BY a.ITEM_NAME LIMIT ${page}, 15
 				</when>
 				<otherwise>
-					order by a.ITEM_NAME limit 0, 15
+					ORDER BY a.ITEM_NAME LIMIT 0, 15
 				</otherwise>
 			</choose>
     	</select>
@@ -130,7 +153,27 @@
 				on a.ITEM_SEQ = c.ITEM_SEQ
 			<where>
 				<if test="itemName != null and itemName != ''">
-					and a.ITEM_NAME like concat('%',#{itemName},'%') or a.ENTP_NAME like concat('%',#{itemName},'%') or a.EFCY_QESITM like concat('%',#{itemName},'%')
+					AND a.ITEM_NAME like concat('%',#{itemName},'%') or a.ENTP_NAME like concat('%',#{itemName},'%') or a.EFCY_QESITM like concat('%',#{itemName},'%')
+				</if>
+				<if test="pillInfoVO.DRUG_SHAPE != null and pillInfoVO.DRUG_SHAPE != ''">
+					AND b.DRUG_SHAPE like concat('%',#{pillInfoVO.DRUG_SHAPE},'%')
+				</if>
+				<if test="pillInfoVO.PRINT_FRONT != null and pillInfoVO.PRINT_FRONT != ''">
+					AND b.PRINT_FRONT like concat('%',#{pillInfoVO.PRINT_FRONT},'%')
+				</if>
+				<if test="pillInfoVO.PRINT_BACK != null and pillInfoVO.PRINT_BACK != ''">
+					AND b.PRINT_BACK like concat('%',#{pillInfoVO.PRINT_BACK},'%')
+				</if>
+				<if test="pillInfoVO.FORM_CODE_NAME != null and pillInfoVO.FORM_CODE_NAME != ''">
+					AND b.FORM_CODE_NAME like concat('%',#{pillInfoVO.FORM_CODE_NAME},'%')
+				</if>
+				<if test="pillInfoVO.COLOR_CLASS1 != null and pillInfoVO.COLOR_CLASS1 != ''">
+					AND b.COLOR_CLASS1 like concat('%',#{pillInfoVO.COLOR_CLASS1},'%')
+					OR b.COLOR_CLASS2 like concat('%',#{pillInfoVO.COLOR_CLASS1},'%')
+				</if>
+				<if test="pillInfoVO.LINE_FRONT != null and pillInfoVO.LINE_FRONT != ''">
+					AND b.LINE_FRONT like concat('%',#{pillInfoVO.LINE_FRONT},'%')
+					OR b.LINE_BACK like concat('%',#{pillInfoVO.LINE_FRONT},'%')
 				</if>
 			</where>
     	</select>

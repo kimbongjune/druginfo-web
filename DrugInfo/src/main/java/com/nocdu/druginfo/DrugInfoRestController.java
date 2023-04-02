@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.nocdu.druginfo.drugdetailinfo.service.DrugDetailInfoServiceImpl;
 import com.nocdu.druginfo.druginfo.vo.DrugInfoVO;
 import com.nocdu.druginfo.pillinfo.service.PillInfoServiceImpl;
+import com.nocdu.druginfo.pillinfo.vo.PillInfoVO;
 
 @RestController
 @RequestMapping("/drugsearch")
@@ -45,7 +46,13 @@ public class DrugInfoRestController {
     @RequestMapping(value= { "/textsearch"},method=RequestMethod.GET)
 	public ModelAndView getDrugTextSearchResult(HttpServletRequest request, HttpSession session,
 			@RequestParam(name="query",value="query", required=false) String query,
-			@RequestParam(name="page",value="page",defaultValue="1",required=false) int page)throws Exception {
+			@RequestParam(name="page",value="page",defaultValue="1",required=false) int page,
+			@RequestParam(name="shape", value="shape",defaultValue="", required=false) String shape,
+			@RequestParam(name="dosageForm", value="dosageForm",defaultValue="", required=false) String dosageForm,
+			@RequestParam(name="printFront", value="printFront",defaultValue="", required=false) String printFront,
+			@RequestParam(name="printBack", value="printBack",defaultValue="", required=false) String printBack,
+			@RequestParam(name="colorClass", value="colorClass",defaultValue="", required=false) String colorClass,
+			@RequestParam(name="line", value="line",defaultValue="", required=false) String line)throws Exception {
 			ModelAndView model = new ModelAndView("jsonView");
 			
 			if(page <= 0) {
@@ -54,13 +61,21 @@ public class DrugInfoRestController {
 			int defaltLimitPage = 15;
 			
 			DrugInfoVO searchParamVO = new DrugInfoVO();
+			PillInfoVO pillInfoVO = new PillInfoVO();
 			
+			pillInfoVO.setDRUG_SHAPE(shape);
+			pillInfoVO.setFORM_CODE_NAME(dosageForm);
+			pillInfoVO.setPRINT_FRONT(printFront);
+			pillInfoVO.setPRINT_BACK(printBack);
+			pillInfoVO.setCOLOR_CLASS1(colorClass);
+			pillInfoVO.setLINE_FRONT(line);
+			
+			searchParamVO.setPillInfoVO(pillInfoVO);
 			searchParamVO.setItemName(query);
 			
 			
 			page = (page - 1) * defaltLimitPage;
 			searchParamVO.setPage(page);
-			
 			//System.out.println("query = "+query);
 			System.out.println("page = "+page);
 			Map<String, Object> map = null;
