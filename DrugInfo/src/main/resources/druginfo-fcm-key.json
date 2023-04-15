@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "druginfo-94e17",
+  "private_key_id": "b50803d8d3905dcd01a014624d950366b151762f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDWejBBs7I1L22X\nBHzWjS5WDys229mwfPao5QKdA6Ihp1zGFM49+vQGcjGVgmN4GdAfNzm0NBHH1VXp\npqRKZKEq0rOMi7B4O8m1NsBhU8vEkZMGdCtVnmokL5wrR3pB16muJYUQS/fBpJR1\nM3W+R6Mf7YxbtvfON+AqPTSsGWSQeUjSjYxqXbf+xu9FbmDT25gp8TaNcXX/p+3x\nkNGCvQFQqT8Kxf6+CdM3WwR7uXPZ4M5ULzuKnfkvBgByJVQR9lZpyGFNBJeZ2xnV\nRjzXPe8aXzD3Zv741Q25NoHDtyYrxKFTTHsLJRZkXdIwxl8cSBRHGE//uN2sdG8o\ngUZxFySFAgMBAAECggEAAJxjJszBj9qNZVtjP6Pco0IdIrrdk93HQL6Q6Kw/T06Q\nD8Bfa1hw+X5kcG3pT/OYNCk5cNn1HayYjLcndflzZrvS5xjpbRjpKir4a/k2dgje\nx6tCXwFkgVXhYVOCyvfiSSyyLv8IZZ93t3MTaBysH5soRdqaOhbOp1AlUO2Bln0V\n8jBcAK33rTtYHoutDhdbU/mu1Dmfkg5WQ90g2qcrD+Kaoy/5MCaGCzKvDFNzI1kY\ncPTrh7lBevAKjsx29kPjlbZvcYAAvyYZ3oU3uez6sucqLZRxCRioGcihEE79mDvF\np+mW0uty8rqNWuNpm8aXZuWui5bMti7o1bHwhyFYwQKBgQDwRRMhWhYpw3EwlSHA\nWlgIwJZzjzMMP0E316mJNsiKAmHMddat9Gox7XXz9ActY1En4R8uVKKFL/tCN9Oo\nTvQbU/TS28f8nLT2JHdG3vWFo3Fq9ZZnQaXfnpy/936/k50N8Zk4TSrFTidWxqr+\n3VwmPbb6RCMpbrtN+4WFl18e/wKBgQDkhNSrd6J+32upz6pugheOf71Q1WUX59ek\ndFXXOaN8QtnuS95X7pcilbJw+UycOeXhznP0joEdycFgu6jbN8jWJVd07lbICbNf\nLmdO6oPl+Ae4L5f6LYyfySR7Bqj9me/0uoHLL+OkCwMqz3RLaoh8c8eV0YMBhY6X\nNCZrRNzAewKBgHemLkyhi//oL+m9mj0rwEM7hLCvUwB6T4P7hZWrDlqLrSAgXnPq\nDygl1GNT1m8n0jZFyT1NMFGa/0iOfHyINM+XE4gdoo2NjCA3MJ6+UQ3nwoc9HVT2\nQCAH4I9INHo6jC9xbJe49d+jd7ui22xn14fDm+ctH0V2uxeudWN9agUJAoGAcvuj\nRuPbj5s7wSYMy64JzFnaGGJHi8/MYaNnzfPinxPENHNYXUZgJbbNIqtOMQ2w7f3D\nuro5nZN3CgVi4WsgUyBW8S8720uGRc5DjSHTXFOBDtxjzC4/I+dBw+WGApUCeFGg\nHWzrTg98eH4KNihUpMpdErVpBcr+BHbpHfB4YyECgYB7x+odTfftDZ3a0bcImrNQ\nHZEqG+h0AhtdInV+Mho3HkJp4t+/MvG5ak89CZBgWDMcAZdBV4trqoP2fqmF1V8o\n3r+wNQyL2DsdP/KVXCfRt4mcJ86YgHgVtHDJAA2NsQ0c5Qn+CFi3R+JaBigX6of9\nGl1ApdID5Yn65ZK1LqdU7g==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-69mfv@druginfo-94e17.iam.gserviceaccount.com",
+  "client_id": "108733453416984932893",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-69mfv%40druginfo-94e17.iam.gserviceaccount.com"
+}
