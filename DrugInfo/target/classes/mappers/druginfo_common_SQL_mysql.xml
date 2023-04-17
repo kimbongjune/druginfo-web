@@ -128,12 +128,12 @@
 					AND b.FORM_CODE_NAME like concat('%',#{pillInfoVO.FORM_CODE_NAME},'%')
 				</if>
 				<if test="pillInfoVO.COLOR_CLASS1 != null and pillInfoVO.COLOR_CLASS1 != ''">
-					AND b.COLOR_CLASS1 like concat('%',#{pillInfoVO.COLOR_CLASS1},'%')
-					OR b.COLOR_CLASS2 like concat('%',#{pillInfoVO.COLOR_CLASS1},'%')
+					AND (b.COLOR_CLASS1 like concat('%',#{pillInfoVO.COLOR_CLASS1},'%')
+					OR b.COLOR_CLASS2 like concat('%',#{pillInfoVO.COLOR_CLASS1},'%'))
 				</if>
 				<if test="pillInfoVO.LINE_FRONT != null and pillInfoVO.LINE_FRONT != ''">
-					AND b.LINE_FRONT like concat('%',#{pillInfoVO.LINE_FRONT},'%')
-					OR b.LINE_BACK like concat('%',#{pillInfoVO.LINE_FRONT},'%')
+					AND (b.LINE_FRONT like concat('%',#{pillInfoVO.LINE_FRONT},'%')
+					OR b.LINE_BACK like concat('%',#{pillInfoVO.LINE_FRONT},'%'))
 				</if>
 			</where>
 			<choose>
@@ -168,12 +168,12 @@
 					AND b.FORM_CODE_NAME like concat('%',#{pillInfoVO.FORM_CODE_NAME},'%')
 				</if>
 				<if test="pillInfoVO.COLOR_CLASS1 != null and pillInfoVO.COLOR_CLASS1 != ''">
-					AND b.COLOR_CLASS1 like concat('%',#{pillInfoVO.COLOR_CLASS1},'%')
-					OR b.COLOR_CLASS2 like concat('%',#{pillInfoVO.COLOR_CLASS1},'%')
+					AND (b.COLOR_CLASS1 like concat('%',#{pillInfoVO.COLOR_CLASS1},'%')
+					OR b.COLOR_CLASS2 like concat('%',#{pillInfoVO.COLOR_CLASS1},'%'))
 				</if>
 				<if test="pillInfoVO.LINE_FRONT != null and pillInfoVO.LINE_FRONT != ''">
-					AND b.LINE_FRONT like concat('%',#{pillInfoVO.LINE_FRONT},'%')
-					OR b.LINE_BACK like concat('%',#{pillInfoVO.LINE_FRONT},'%')
+					AND (b.LINE_FRONT like concat('%',#{pillInfoVO.LINE_FRONT},'%')
+					OR b.LINE_BACK like concat('%',#{pillInfoVO.LINE_FRONT},'%'))
 				</if>
 			</where>
     	</select>
