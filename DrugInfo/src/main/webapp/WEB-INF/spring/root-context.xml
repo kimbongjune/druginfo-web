@@ -3,6 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
+	<!-- 메시지소스 암호화 설정 -->
     <bean id="environmentVariablesConfiguration" class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
         <property name="algorithm" value="PBEWITHMD5ANDTRIPLEDES"/>
         <property name="password" value="bs"/>
@@ -14,7 +15,9 @@
         <constructor-arg ref="configurationEncryptor"/>
         <property name="location" value="classpath:/globals.properties"/>
     </bean>
+    <!-- 메시지소스 암호화 설정 끝 -->
     
+    <!-- 데이터베이스 연결 정보 -->
 	<bean id="dataSource"
         class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="${db.aws.driver}"></property>
@@ -24,19 +27,24 @@
         <property name="validationQuery" value="select 1 from dual" />
 		<property name="testWhileIdle" value="true" />
 		<property name="timeBetweenEvictionRunsMillis" value="600000" />
-    </bean>        
+    </bean>
+    <!-- 데이터베이스 연결 정보 끝 -->
     
-       <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <!-- 마이바티스 설정 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"></property>
         <property name="configLocation" value="classpath:/mybatis-config.xml" />
  		<property name="mapperLocations" value="classpath:mappers/**/*mysql.xml" />
 	</bean>
+	<!-- 마이바티스 설정 끝 -->
 
+	<!-- 데이터베이스 연결 설정 -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
  		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
 	</bean>
+	<!-- 데이터베이스 연결 설정 끝 -->
 		
-		
+	<!-- 메시지소스 파일 설정 -->
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
@@ -48,10 +56,13 @@
 		</property>
 		<property name="defaultEncoding" value="UTF-8"/>
 	</bean>
+	<!-- 메시지소스 파일 설정 끝 -->
 	
+	<!-- 메시지소스  설정 -->
 	<bean id="egovMessageSource" class="com.nocdu.druginfo.EgovMessageSource">
 		<property name="reloadableResourceBundleMessageSource">
 			<ref bean="messageSource"/>
 		</property>
 	</bean>
+	<!-- 메시지소스  설정 끝 -->
 </beans>

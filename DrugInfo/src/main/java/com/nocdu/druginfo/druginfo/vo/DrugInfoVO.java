@@ -3,12 +3,18 @@ package com.nocdu.druginfo.druginfo.vo;
 import com.nocdu.druginfo.drugdetailinfo.vo.DrugDetailInfoVO;
 import com.nocdu.druginfo.pillinfo.vo.PillInfoVO;
 
+/**
+ * @author 김봉준
+ * 의약품 기본정보 VO 클래스
+ */
 public class DrugInfoVO {
 	
 	private static final long serialVersionUID = 6723434363565852261L;
 	
+	/** 의약품 상세정보 VO **/
 	private DrugDetailInfoVO drugDetailInfoVO;
 	
+	/** 의약품 식별정보 VO **/
 	private PillInfoVO pillInfoVO;
 	
 	/** 제약사 명 **/

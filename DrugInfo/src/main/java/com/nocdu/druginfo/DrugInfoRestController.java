@@ -18,11 +18,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.nocdu.druginfo.drugdetailinfo.service.DrugDetailInfoService;
 import com.nocdu.druginfo.drugdetailinfo.service.DrugDetailInfoServiceImpl;
+import com.nocdu.druginfo.druginfo.service.DrugInfoService;
+import com.nocdu.druginfo.druginfo.service.DrugInfoServiceImpl;
 import com.nocdu.druginfo.druginfo.vo.DrugInfoVO;
+import com.nocdu.druginfo.pillinfo.service.PillInfoService;
 import com.nocdu.druginfo.pillinfo.service.PillInfoServiceImpl;
 import com.nocdu.druginfo.pillinfo.vo.PillInfoVO;
 
+/**
+ * 	@author 김봉준
+ *	앱에서 호출하는 의약품 정보 API 컨트롤러
+ */
 @RestController
 @RequestMapping("/drugsearch")
 public class DrugInfoRestController {
@@ -30,18 +38,25 @@ public class DrugInfoRestController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(DrugInfoRestController.class);
 	
-    /** **/
+    /** 의약품 기본정보 Service **/
     @Resource(name = "drugInfoServiceImpl")
-    private com.nocdu.druginfo.druginfo.service.DrugInfoServiceImpl drugInfoServiceImpl;
+    private DrugInfoService drugInfoServiceImpl;
     
-    /** **/
-    @Resource(name = "pillInfoServiceImpl")
-    private PillInfoServiceImpl pillInfoServiceImpl;
-    
-    /** **/
-    @Resource(name = "drugDetailInfoServiceImpl")
-    private DrugDetailInfoServiceImpl drugDetailInfoServiceImpl;
-    
+    /**
+     * @author 김봉준
+     * @param request
+     * @param session
+     * @param query
+     * @param page
+     * @param shape
+     * @param dosageForm
+     * @param printFront
+     * @param printBack
+     * @param colorClass
+     * @param line
+     * @return
+     * @throws Exception
+     */
     @ResponseBody
     @RequestMapping(value= { "/textsearch"},method=RequestMethod.GET)
 	public ModelAndView getDrugTextSearchResult(HttpServletRequest request, HttpSession session,

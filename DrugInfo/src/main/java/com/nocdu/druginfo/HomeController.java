@@ -57,64 +57,78 @@ import com.google.gson.reflect.TypeToken;
 
 import org.xml.sax.InputSource;
 
+import com.nocdu.druginfo.drugdetailinfo.service.DrugDetailInfoService;
 import com.nocdu.druginfo.drugdetailinfo.service.DrugDetailInfoServiceImpl;
 import com.nocdu.druginfo.drugdetailinfo.vo.DrugDetailInfoVO;
+import com.nocdu.druginfo.druginfo.service.DrugInfoService;
 import com.nocdu.druginfo.druginfo.service.DrugInfoServiceImpl;
 import com.nocdu.druginfo.druginfo.vo.DrugInfoVO;
+import com.nocdu.druginfo.pillinfo.service.PillInfoService;
 import com.nocdu.druginfo.pillinfo.service.PillInfoServiceImpl;
 import com.nocdu.druginfo.pillinfo.vo.PillInfoVO;
 
 /**
- * Handles requests for the application home page.
+ * 	@author 김봉준
+ *	공공데이터에서 의약품 api를 호출하는 클래스
+ *	반환받은 데이터를 데이터베이스에 인서트 한다.
+ *	TODO 추후에 스케줄러를 이용해 자동으로 갱신하게 변경할 예정, api호출을 Restcontroller로 변경 할 예정
  */
 @Controller
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-    /** **/
+	/** 의약품 기본정보 Service **/
     @Resource(name = "drugInfoServiceImpl")
-    private DrugInfoServiceImpl drugInfoServiceImpl;
+    private DrugInfoService drugInfoServiceImpl;
     
-    /** **/
+    /** 의약품 식별정보 Service **/
     @Resource(name = "pillInfoServiceImpl")
-    private PillInfoServiceImpl pillInfoServiceImpl;
+    private PillInfoService pillInfoServiceImpl;
     
-    /** **/
+    /** 의약품 상세정보 Service **/
     @Resource(name = "drugDetailInfoServiceImpl")
-    private DrugDetailInfoServiceImpl drugDetailInfoServiceImpl;
+    private DrugDetailInfoService drugDetailInfoServiceImpl;
 	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "home";
-	}
+//	/**
+//	 * Simply selects the home view to render by returning its name.
+//	 */
+//	@RequestMapping(value = "/", method = RequestMethod.GET)
+//	public String home(Locale locale, Model model) {
+//		logger.info("Welcome home! The client locale is {}.", locale);
+//		
+//		Date date = new Date();
+//		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+//		
+//		String formattedDate = dateFormat.format(date);
+//		
+//		model.addAttribute("serverTime", formattedDate );
+//		
+//		return "home";
+//	}
 	
+    /**
+     * 개인정보 처리방침 컨트롤러
+     * @author 김봉준
+     * @param locale
+     * @param model
+     * @return
+     */
 	@RequestMapping(value = "/agreements", produces = "application/json; charset=utf8", method = RequestMethod.GET)
 	public String agreements(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
 		
 		return "agreements";
 	}
 	
+	/**
+	 * 의약품 기본정보 API 호출 컨트롤러
+	 * 1건 호출 후 전체 데이터 개수를 반환받으며 반환받은 개수를 파라미터로 데이터베이스 삽입 함수를 호출한다
+	 * @author 김봉준
+	 * @param locale
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/api/insert/druginfo", produces = "application/json; charset=utf8", method = RequestMethod.GET)
 	@ResponseBody
 	public String insertDrugInfoApi(Locale locale, Model model) throws Exception {
@@ -154,6 +168,15 @@ public class HomeController {
         return "";
 	}
 	
+	/**
+	 * 의약품 식별정보 API 호출 컨트롤러
+	 * 1건 호출 후 전체 데이터 개수를 반환받으며 반환받은 개수를 파라미터로 데이터베이스 삽입 함수를 호출한다
+	 * @author 김봉준
+	 * @param locale
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/api/insert/pillinfo", produces = "application/json; charset=utf8", method = RequestMethod.GET)
 	@ResponseBody
 	public String insertPillInfoApi(Locale locale, Model model) throws Exception {
@@ -194,6 +217,15 @@ public class HomeController {
 	}
 	
 	
+	/**
+	 * 의약품 식별정보 API 호출 컨트롤러
+	 * 1건 호출 후 전체 데이터 개수를 반환받으며 반환받은 개수를 파라미터로 데이터베이스 삽입 함수를 호출한다
+	 * @author 김봉준
+	 * @param locale
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/api/insert/drugdetailinfo", produces = "application/xml; charset=utf8", method = RequestMethod.GET)
 	@ResponseBody
 	public String insertDrguDetailInfoApi(Locale locale, Model model) throws Exception {
@@ -255,6 +287,14 @@ public class HomeController {
 //            }
 		return "";
 	}
+	
+	/**
+	 * 의약품 상세정보 데이터베이스 삽입 함수
+	 * 파라미터로 받은 개수 만큼 반복문을돌며 한번에 100건식 데이터베이스에 벌크인서트를 한다.
+	 * 해당 데이터는 XML로 파싱한다. xml 태그 자체가 데이터로 들어가 있어 json 형태로 파싱하기 곤란한 문제가 있었음
+	 * @author 김봉준
+	 * @param count
+	 */
 	public void drugDetailInfoAutoInsert(int count){
 		System.out.println("==============================인서트 시작==============================");
 		try {
@@ -280,47 +320,6 @@ public class HomeController {
 	            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 	            	DrugDetailInfoVO searchVo = new DrugDetailInfoVO();
 	                Element eElement = (Element) nNode;
-//	                System.out.println("ITEM_SEQ : " + eElement.getElementsByTagName("ITEM_SEQ").item(0).getTextContent());
-//	                System.out.println("ITEM_NAME : " + eElement.getElementsByTagName("ITEM_NAME").item(0).getTextContent());
-//	                System.out.println("ENTP_NAME : " + eElement.getElementsByTagName("ENTP_NAME").item(0).getTextContent());
-//	                System.out.println("ITEM_PERMIT_DATE : " + eElement.getElementsByTagName("ITEM_PERMIT_DATE").item(0).getTextContent());
-//	                System.out.println("CNSGN_MANUF : " + eElement.getElementsByTagName("CNSGN_MANUF").item(0).getTextContent());
-//	                System.out.println("ETC_OTC_CODE : " + eElement.getElementsByTagName("ETC_OTC_CODE").item(0).getTextContent());
-//	                System.out.println("CHART : " + eElement.getElementsByTagName("CHART").item(0).getTextContent());
-//	                System.out.println("BAR_CODE : " + eElement.getElementsByTagName("BAR_CODE").item(0).getTextContent());
-//	                System.out.println("MATERIAL_NAME : " + eElement.getElementsByTagName("MATERIAL_NAME").item(0).getTextContent());
-//	                System.out.println("EE_DOC_ID : " + eElement.getElementsByTagName("EE_DOC_ID").item(0).getTextContent());
-//	                System.out.println("UD_DOC_ID : " + eElement.getElementsByTagName("UD_DOC_ID").item(0).getTextContent());
-//	                System.out.println("NB_DOC_ID : " + eElement.getElementsByTagName("NB_DOC_ID").item(0).getTextContent());
-//	                System.out.println("INSERT_FILE : " + eElement.getElementsByTagName("INSERT_FILE").item(0).getTextContent());
-//	                System.out.println("STORAGE_METHOD : " + eElement.getElementsByTagName("STORAGE_METHOD").item(0).getTextContent());
-//	                System.out.println("VALID_TERM : " + eElement.getElementsByTagName("VALID_TERM").item(0).getTextContent());
-//	                System.out.println("REEXAM_TARGET : " + eElement.getElementsByTagName("REEXAM_TARGET").item(0).getTextContent());
-//	                System.out.println("REEXAM_DATE : " + eElement.getElementsByTagName("REEXAM_DATE").item(0).getTextContent());
-//	                System.out.println("PACK_UNIT : " + eElement.getElementsByTagName("PACK_UNIT").item(0).getTextContent());
-//	                System.out.println("EDI_CODE : " + eElement.getElementsByTagName("EDI_CODE").item(0).getTextContent());
-//	                System.out.println("DOC_TEXT : " + eElement.getElementsByTagName("DOC_TEXT").item(0).getTextContent());
-//	                System.out.println("PERMIT_KIND_NAME : " + eElement.getElementsByTagName("PERMIT_KIND_NAME").item(0).getTextContent());
-//	                System.out.println("ENTP_NO : " + eElement.getElementsByTagName("ENTP_NO").item(0).getTextContent());
-//	                System.out.println("MAKE_MATERIAL_FLAG : " + eElement.getElementsByTagName("MAKE_MATERIAL_FLAG").item(0).getTextContent());
-//	                System.out.println("NEWDRUG_CLASS_NAME : " + eElement.getElementsByTagName("NEWDRUG_CLASS_NAME").item(0).getTextContent());
-//	                System.out.println("INDUTY_TYPE : " + eElement.getElementsByTagName("INDUTY_TYPE").item(0).getTextContent());
-//	                System.out.println("CANCEL_DATE : " + eElement.getElementsByTagName("CANCEL_DATE").item(0).getTextContent());
-//	                System.out.println("CANCEL_NAME : " + eElement.getElementsByTagName("CANCEL_NAME").item(0).getTextContent());
-//	                System.out.println("CHANGE_DATE : " + eElement.getElementsByTagName("CHANGE_DATE").item(0).getTextContent());
-//	                System.out.println("NARCOTIC_KIND_CODE : " + eElement.getElementsByTagName("NARCOTIC_KIND_CODE").item(0).getTextContent());
-//	                System.out.println("GBN_NAME : " + eElement.getElementsByTagName("GBN_NAME").item(0).getTextContent());
-//	                System.out.println("TOTAL_CONTENT : " + eElement.getElementsByTagName("TOTAL_CONTENT").item(0).getTextContent());
-//	                System.out.println("============================================================================================");
-//	                System.out.println("EE_DOC_DATA : " + eElement.getElementsByTagName("EE_DOC_DATA").item(0).getTextContent());
-//	                System.out.println("UD_DOC_DATA : " + eElement.getElementsByTagName("UD_DOC_DATA").item(0).getTextContent());
-//	                System.out.println("NB_DOC_DATA : " + eElement.getElementsByTagName("NB_DOC_DATA").item(0).getTextContent());
-//	                System.out.println("============================================================================================");
-//	                System.out.println("PN_DOC_DATA : " + eElement.getElementsByTagName("PN_DOC_DATA").item(0).getTextContent());
-//	                System.out.println("MAIN_ITEM_INGR : " + eElement.getElementsByTagName("MAIN_ITEM_INGR").item(0).getTextContent());
-//	                System.out.println("INGR_NAME : " + eElement.getElementsByTagName("INGR_NAME").item(0).getTextContent());
-//	                System.out.println("ATC_CODE : " + eElement.getElementsByTagName("ATC_CODE").item(0).getTextContent());
-//	                
 	                String ITEM_SEQ = Jsoup.parse(eElement.getElementsByTagName("ITEM_SEQ").item(0).getTextContent().replace("\n", "").replace("\r", "").replaceAll(" +", " ").trim()).text();
 	                String ITEM_NAME = Jsoup.parse(eElement.getElementsByTagName("ITEM_NAME").item(0).getTextContent().replace("\n", "").replace("\r", "").replaceAll(" +", " ").trim()).text();
 	                String ENTP_NAME = Jsoup.parse(eElement.getElementsByTagName("ENTP_NAME").item(0).getTextContent().replace("\n", "").replace("\r", "").replaceAll(" +", " ").trim()).text();
@@ -447,6 +446,13 @@ public class HomeController {
 		}
 	}
 	
+	/**
+	 * 의약품 기본정보 데이터베이스 삽입 함수
+	 * 파라미터로 받은 개수 만큼 반복문을돌며 한번에 100건식 데이터베이스에 벌크인서트를 한다.
+	 * @author 김봉준
+	 * @param count
+	 * @throws Exception
+	 */
 	public void drugInfoAutoInsert(int count) throws Exception{
 		for(int i = 1; i <= count/100+1; i ++) {
 			StringBuffer result = new StringBuffer();
@@ -492,6 +498,13 @@ public class HomeController {
 		
 	}
 	
+	/**
+	 * 의약품 식별정보 데이터베이스 삽입 함수
+	 * 파라미터로 받은 개수 만큼 반복문을돌며 한번에 100건식 데이터베이스에 벌크인서트를 한다.
+	 * @author 김봉준
+	 * @param count
+	 * @throws Exception
+	 */
 	public void pillInfoAutoInsert(int count) throws Exception{
 		System.out.println("===============인서트 시작===============");
 		for(int i = 1; i <= count/100+1; i ++) {
@@ -532,111 +545,8 @@ public class HomeController {
 	        List<PillInfoVO> pillInfoList = gson.fromJson(itemArray.toString(), new TypeToken<List<PillInfoVO>>(){}.getType());
 	        if(pillInfoList.size() > 0) {
 	        	pillInfoServiceImpl.insertPillInfoList(pillInfoList);
-//	            for(PillInfoVO vo : pillInfoList) {
-//	            	PillInfoVO insertVO = new PillInfoVO();
-//	            	//System.out.println("품목 일련번호 ="+vo.getITEM_SEQ());
-//	            	insertVO.setITEM_SEQ(vo.getITEM_SEQ());
-//	            	//System.out.println("품목 명 ="+vo.getITEM_NAME());
-//	            	insertVO.setITEM_NAME(vo.getITEM_NAME());
-//	            	//System.out.println("업체 일련번호 ="+vo.getENTP_SEQ());
-//	            	insertVO.setENTP_SEQ(vo.getENTP_SEQ());
-//	            	//System.out.println("업체 명 ="+vo.getENTP_NAME());
-//	            	insertVO.setENTP_NAME(vo.getENTP_NAME());
-//	            	//System.out.println("성상 ="+vo.getCHART());
-//	            	insertVO.setCHART(vo.getCHART());
-//	            	//System.out.println("큰제품 이미지 ="+vo.getITEM_IMAGE());
-//	            	insertVO.setITEM_IMAGE(vo.getITEM_IMAGE());
-//	            	//System.out.println("표시(앞) ="+vo.getPRINT_FRONT());
-//	            	insertVO.setPRINT_FRONT(vo.getPRINT_FRONT());
-//	            	//System.out.println("표시(뒤) ="+vo.getPRINT_BACK());
-//	            	insertVO.setPRINT_BACK(vo.getPRINT_BACK());
-//	            	//System.out.println("의약품모양 ="+vo.getDRUG_SHAPE());
-//	            	insertVO.setDRUG_SHAPE(vo.getDRUG_SHAPE());
-//	            	//System.out.println("색깔(앞) ="+vo.getCOLOR_CLASS1());
-//	            	insertVO.setCOLOR_CLASS1(vo.getCOLOR_CLASS1());
-//	            	//System.out.println("색깔(뒤) ="+vo.getCOLOR_CLASS2());
-//	            	insertVO.setCOLOR_CLASS2(vo.getCOLOR_CLASS2());
-//	            	//System.out.println("분할선(앞) ="+vo.getLINE_FRONT());
-//	            	insertVO.setLINE_FRONT(vo.getLINE_FRONT());
-//	            	//System.out.println("분할선(뒤) ="+vo.getLINE_BACK());
-//	            	insertVO.setLINE_BACK(vo.getLINE_BACK());
-//	            	//System.out.println("크기(장축) ="+vo.getLENG_LONG());
-//	            	insertVO.setLENG_LONG(vo.getLENG_LONG());
-//	            	//System.out.println("크기(단축) ="+vo.getLENG_SHORT());
-//	            	insertVO.setLENG_SHORT(vo.getLENG_SHORT());
-//	            	//System.out.println("크기(두께) ="+vo.getTHICK());
-//	            	insertVO.setTHICK(vo.getTHICK());
-//	            	//System.out.println("약학정보원 이미지 생성일 ="+vo.getIMG_REGIST_TS());
-//	            	insertVO.setIMG_REGIST_TS(vo.getIMG_REGIST_TS());
-//	            	//System.out.println("분류번호 ="+vo.getCLASS_NO());
-//	            	insertVO.setCLASS_NO(vo.getCLASS_NO());
-//	            	//System.out.println("분류명 ="+vo.getCLASS_NAME());
-//	            	insertVO.setCLASS_NAME(vo.getCLASS_NAME());
-//	            	//System.out.println("전문/일반 ="+vo.getETC_OTC_NAME());
-//	            	insertVO.setETC_OTC_NAME(vo.getETC_OTC_NAME());
-//	            	//System.out.println("품목허가일자 ="+vo.getITEM_PERMIT_DATE());
-//	            	insertVO.setITEM_PERMIT_DATE(vo.getITEM_PERMIT_DATE());
-//	            	//System.out.println("제형코드이름 ="+vo.getFORM_CODE_NAME());
-//	            	insertVO.setFORM_CODE_NAME(vo.getFORM_CODE_NAME());
-//	            	//System.out.println("마크내용(앞) ="+vo.getMARK_CODE_FRONT_ANAL());
-//	            	insertVO.setMARK_CODE_FRONT_ANAL(vo.getMARK_CODE_FRONT_ANAL());
-//	            	//System.out.println("마크내용(뒤) ="+vo.getMARK_CODE_BACK_ANAL());
-//	            	insertVO.setMARK_CODE_BACK_ANAL(vo.getMARK_CODE_BACK_ANAL());
-//	            	//System.out.println("마크이미지(앞) ="+vo.getMARK_CODE_FRONT_IMG());
-//	            	insertVO.setMARK_CODE_FRONT_IMG(vo.getMARK_CODE_FRONT_IMG());
-//	            	//System.out.println("마크이미지(뒤) ="+vo.getMARK_CODE_BACK_IMG());
-//	            	insertVO.setMARK_CODE_BACK_IMG(vo.getMARK_CODE_BACK_IMG());
-//	            	//System.out.println("영문명 ="+vo.getITEM_ENG_NAME());
-//	            	insertVO.setITEM_ENG_NAME(vo.getITEM_ENG_NAME());
-//	            	//System.out.println("변경일자 ="+vo.getCHANGE_DATE());
-//	            	insertVO.setCHANGE_DATE(vo.getCHANGE_DATE());
-//	            	//System.out.println("마크코드(앞) ="+vo.getMARK_CODE_FRONT());
-//	            	insertVO.setMARK_CODE_FRONT(vo.getMARK_CODE_FRONT());
-//	            	//System.out.println("마크코드(뒤) ="+vo.getMARK_CODE_BACK());
-//	            	insertVO.setMARK_CODE_BACK(vo.getMARK_CODE_BACK());
-//	            	//System.out.println("보험코드 ="+vo.getEDI_CODE());
-//	            	insertVO.setEDI_CODE(vo.getEDI_CODE());
-//	            	
-//	            	pillInfoServiceImpl.insertPillInfoOne(insertVO);
-//	            	Thread.sleep(100);
-//	            }
 	        }
 		}
 		System.out.println("===============인서트 종료===============");
-//		PillInfoVO vos = new PillInfoVO();
-//		List<PillInfoVO> resultVO = (List<PillInfoVO>)pillInfoServiceImpl.selectPillInfoListAll(vos);
-//		for(PillInfoVO vo : resultVO) {
-//        	System.out.println("품목 일련번호 ="+vo.getITEM_SEQ());
-//        	System.out.println("품목 명 ="+vo.getITEM_NAME());
-//        	System.out.println("업체 일련번호 ="+vo.getENTP_SEQ());
-//        	System.out.println("업체 명 ="+vo.getENTP_NAME());
-//        	System.out.println("성상 ="+vo.getCHART());
-//        	System.out.println("큰제품 이미지 ="+vo.getITEM_IMAGE());
-//        	System.out.println("표시(앞) ="+vo.getPRINT_FRONT());
-//        	System.out.println("표시(뒤) ="+vo.getPRINT_BACK());
-//        	System.out.println("의약품모양 ="+vo.getDRUG_SHAPE());
-//        	System.out.println("색깔(앞) ="+vo.getCOLOR_CLASS1());
-//        	System.out.println("색깔(뒤) ="+vo.getCOLOR_CLASS2());
-//        	System.out.println("분할선(앞) ="+vo.getLINE_FRONT());
-//        	System.out.println("분할선(뒤) ="+vo.getLINE_BACK());
-//        	System.out.println("크기(장축) ="+vo.getLENG_LONG());
-//        	System.out.println("크기(단축) ="+vo.getLENG_SHORT());
-//        	System.out.println("크기(두께) ="+vo.getTHICK());
-//        	System.out.println("약학정보원 이미지 생성일 ="+vo.getIMG_REGIST_TS());
-//        	System.out.println("분류번호 ="+vo.getCLASS_NO());
-//        	System.out.println("분류명 ="+vo.getCLASS_NAME());
-//        	System.out.println("전문/일반 ="+vo.getETC_OTC_NAME());
-//        	System.out.println("품목허가일자 ="+vo.getITEM_PERMIT_DATE());
-//        	System.out.println("제형코드이름 ="+vo.getFORM_CODE_NAME());
-//        	System.out.println("마크내용(앞) ="+vo.getMARK_CODE_FRONT_ANAL());
-//        	System.out.println("마크내용(뒤) ="+vo.getMARK_CODE_BACK_ANAL());
-//        	System.out.println("마크이미지(앞) ="+vo.getMARK_CODE_FRONT_IMG());
-//        	System.out.println("마크이미지(뒤) ="+vo.getMARK_CODE_BACK_IMG());
-//        	System.out.println("영문명 ="+vo.getITEM_ENG_NAME());
-//        	System.out.println("변경일자 ="+vo.getCHANGE_DATE());
-//        	System.out.println("마크코드(앞) ="+vo.getMARK_CODE_FRONT());
-//        	System.out.println("마크코드(뒤) ="+vo.getMARK_CODE_BACK());
-//        	System.out.println("보험코드 ="+vo.getEDI_CODE());
-//		}
 	}
 }

@@ -9,23 +9,27 @@
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
-	<!-- Enables the Spring MVC @Controller programming model -->
+	<!-- 어노테이션이 달려있는 클래스를 빈으로 등록하기 위한 설정 -->
 	<annotation-driven />
 
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<!-- 리소스 파일 접근 url -->
 	<resources mapping="/resources/**" location="/resources/" />
 
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<!-- return String jsp 디렉토리 -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- 빈을 등록할 패키지 설정 -->
 	<context:component-scan base-package="com.nocdu.druginfo" />
+	
+	<!-- ResponsBody 형태(json)으로 리턴하기 위한 설정 -->
     <beans:bean id="jsonviewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" >
         <beans:property name="order" value="1" />
     </beans:bean>
     
+    <!-- json의 텍스트 인코딩 설정(UTF-8) -->
     <beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" >
         <beans:property name="contentType" value="application/json;charset=UTF-8" />
     </beans:bean>

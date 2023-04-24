@@ -1,5 +1,9 @@
 package com.nocdu.druginfo.pillinfo.vo;
 
+/**
+ * @author 김봉준
+ * 의약품 식별정보 VO 클래스
+ */
 public class PillInfoVO {
 	
 	private static final long serialVersionUID = 6723434363565852261L;

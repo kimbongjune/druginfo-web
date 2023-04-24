@@ -12,15 +12,27 @@ import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 import com.nocdu.druginfo.EgovMessageSource;
 
+/**
+ * 	@author 김봉준
+ * 	FCM 전송 구현 클래스
+ */
 @Service(value="FcmSendService")
 public class FcmServiceImpl implements FcmService {
 	
+	/** EgovMessageSource **/
 	@Resource(name = "egovMessageSource")
     private EgovMessageSource egovMessageSource;
 	
+	/**
+	 * @author 김봉준
+	 * @param token
+	 * @param title
+	 * @param body
+	 * @throws FirebaseMessagingException
+	 */
 	@Override
 	public void sendFcm(String token, String title, String body) throws FirebaseMessagingException {
-		// Create a notification
+		//노티피케이션을 세팅한다.
 		Message message = Message.builder()
                 .setAndroidConfig(AndroidConfig.builder()
                         .setTtl(3600*1000)
