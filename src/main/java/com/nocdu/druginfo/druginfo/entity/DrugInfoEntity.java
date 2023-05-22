@@ -1,4 +1,4 @@
-package com.nocdu.druginfo.Entity;
+package com.nocdu.druginfo.druginfo.entity;
 
 import lombok.Data;
 import lombok.Getter;
@@ -10,7 +10,6 @@ import javax.persistence.*;
  * @since 2023-05-23
  * @author 김봉준
  * 의약품 기본정보 엔티티 클래스
- * 스프링 부트로 변경 테스트중
  */
 @Getter
 @Setter
