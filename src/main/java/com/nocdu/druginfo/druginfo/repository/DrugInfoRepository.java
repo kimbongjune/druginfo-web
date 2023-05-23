@@ -1,25 +1,24 @@
 package com.nocdu.druginfo.druginfo.repository;
 
 import com.nocdu.druginfo.druginfo.entity.DrugInfoEntity;
-import com.nocdu.druginfo.requestparam.DrugSearchParamVO;
+import com.nocdu.druginfo.request.DrugSearchRequestParamDto;
 import com.nocdu.druginfo.response.Documents;
-import com.nocdu.druginfo.response.DrugSearchResultVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
  * @since 2023-05-23
  * @author 김봉준
  * 의약품 기본정보 데이터베이스 접근 JPA 인터페이스 클래스
+ * TODO 배치 프로그램을 이용해 인서트 로직을 작성할 예정이다.
  */
 public interface DrugInfoRepository extends JpaRepository<DrugInfoEntity, Long> {
-    
+
     //아이디를 이용해 의약품 기본정보를 단건 조회한다.
     @Override
     Optional<DrugInfoEntity> findById(Long aLong);
@@ -35,13 +34,14 @@ public interface DrugInfoRepository extends JpaRepository<DrugInfoEntity, Long> 
             "ON a.itemSeq = b.itemSeq " +
             "LEFT JOIN DrugDetailInfoEntity as c " +
             "ON a.itemSeq = c.itemSeq " +
-            "WHERE (:#{#vo.query} IS NULL OR a.itemName LIKE CONCAT('%', :#{#vo.query}, '%') OR a.entpName LIKE CONCAT('%', :#{#vo.query}, '%') OR a.efcyQesitm LIKE CONCAT('%', :#{#vo.query}, '%')) " +
-            "AND (:#{#vo.shape} IS NULL OR b.drugShape LIKE CONCAT('%', :#{#vo.shape}, '%')) " +
-            "AND (:#{#vo.printFront} IS NULL OR b.printFront LIKE CONCAT('%', :#{#vo.printFront}, '%')) " +
-            "AND (:#{#vo.printBack} IS NULL OR b.printBack LIKE CONCAT('%', :#{#vo.printBack}, '%')) " +
-            "AND (:#{#vo.dosageForm} IS NULL OR b.formCodeName LIKE CONCAT('%', :#{#vo.dosageForm}, '%')) " +
-            "AND (:#{#vo.colorClass} IS NULL OR (b.colorClass1 LIKE CONCAT('%', :#{#vo.colorClass}, '%') OR b.colorClass2 LIKE CONCAT('%', :#{#vo.colorClass}, '%'))) " +
-            "AND (:#{#vo.line} IS NULL OR (b.lineFront LIKE CONCAT('%', :#{#vo.line}, '%') OR b.lineBack LIKE CONCAT('%', :#{#vo.line}, '%'))) " +
+            "WHERE " +
+            "((:#{#vo.query} IS NULL OR :#{#vo.query} = '') OR (a.itemName LIKE CONCAT('%', :#{#vo.query}, '%')) OR (a.entpName LIKE CONCAT('%', :#{#vo.query}, '%')) OR (a.efcyQesitm LIKE CONCAT('%', :#{#vo.query}, '%'))) " +
+            "AND ((:#{#vo.shape} IS NULL OR :#{#vo.shape} = '') OR (b.drugShape LIKE CONCAT('%', :#{#vo.shape}, '%'))) " +
+            "AND ((:#{#vo.printFront} IS NULL OR :#{#vo.printFront} = '') OR (b.printFront LIKE CONCAT('%', :#{#vo.printFront}, '%'))) " +
+            "AND ((:#{#vo.printBack} IS NULL OR :#{#vo.printBack} = '') OR (b.printBack LIKE CONCAT('%', :#{#vo.printBack}, '%'))) " +
+            "AND ((:#{#vo.dosageForm} IS NULL OR :#{#vo.dosageForm} = '') OR (b.formCodeName LIKE CONCAT('%', :#{#vo.dosageForm}, '%'))) " +
+            "AND ((:#{#vo.colorClass} IS NULL OR :#{#vo.colorClass} = '') OR ((b.colorClass1 LIKE CONCAT('%', :#{#vo.colorClass}, '%')) OR (b.colorClass2 LIKE CONCAT('%', :#{#vo.colorClass}, '%')))) " +
+            "AND ((:#{#vo.line} IS NULL OR :#{#vo.line} = '') OR ((b.lineFront LIKE CONCAT('%', :#{#vo.line}, '%')) OR (b.lineBack LIKE CONCAT('%', :#{#vo.line}, '%')))) " +
             "ORDER BY a.itemName")
-    Page<Documents> selectDrugInfoSearchList(@Param("vo") DrugSearchParamVO vo, Pageable pageable);
+    Page<Documents> selectDrugInfoSearchList(@Param("vo") DrugSearchRequestParamDto vo, Pageable pageable);
 }

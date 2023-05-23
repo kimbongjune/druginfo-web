@@ -1,5 +1,7 @@
 package com.nocdu.druginfo.druginfo.entity;
 
+import com.nocdu.druginfo.drugdetailinfo.entity.DrugDetailInfoEntity;
+import com.nocdu.druginfo.pillinfo.entity.PillInfoEntity;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

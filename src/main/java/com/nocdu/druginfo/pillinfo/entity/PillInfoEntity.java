@@ -1,5 +1,6 @@
 package com.nocdu.druginfo.pillinfo.entity;
 
+import com.nocdu.druginfo.druginfo.entity.DrugInfoEntity;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +25,7 @@ public class PillInfoEntity {
     /** 고유 아이디 **/
     private Long id;
 
-    @Column(name = "ITEM_SEQ")
+    @Column(name = "ITEM_SEQ", insertable = false, updatable = false)
     /** 품목 일련번호 **/
     private String itemSeq;
 

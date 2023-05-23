@@ -29,6 +29,10 @@ dependencies {
 
     //application.properties 암호화를 위한 의존성 주입
     implementation group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.3'
+
+    //FCM 전송을 위한 의존성 주입
+    implementation 'com.google.firebase:firebase-admin:9.1.1'
+
 }
 
 tasks.named('test') {

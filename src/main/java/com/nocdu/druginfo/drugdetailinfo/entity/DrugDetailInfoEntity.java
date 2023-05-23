@@ -1,5 +1,6 @@
 package com.nocdu.druginfo.drugdetailinfo.entity;
 
+import com.nocdu.druginfo.druginfo.entity.DrugInfoEntity;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +20,7 @@ import javax.persistence.*;
 public class DrugDetailInfoEntity {
 
     @Id
-    @Column(name = "ITEM_SEQ")
+    @Column(name = "ITEM_SEQ", insertable = false, updatable = false)
     /** 품목기준코드 **/
     private String itemSeq;
 
@@ -116,6 +117,6 @@ public class DrugDetailInfoEntity {
     private String interactionCaution;
 
     @Column(name = "EXTRA_CAUTION")
-    /** 포함되지 않는 텍스트 **/
+    /** 기타 주의사항 **/
     private String extraCaution;
 }

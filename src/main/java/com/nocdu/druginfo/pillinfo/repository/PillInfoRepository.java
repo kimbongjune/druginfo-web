@@ -13,6 +13,7 @@ import java.util.Optional;
  * @since 2023-05-23
  * @author 김봉준
  * 의약품 식별정보 데이터베이스 접근 JPA 인터페이스 클래스
+ * TODO 배치 프로그램을 이용해 인서트 로직을 작성할 예정이다.
  */
 public interface PillInfoRepository extends JpaRepository<PillInfoEntity, Long> {
 
