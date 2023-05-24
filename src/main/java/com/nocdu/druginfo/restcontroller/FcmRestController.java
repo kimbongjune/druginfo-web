@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 의약품 최소 보유량 도달시 동작한다.
  */
 @RestController
-@RequestMapping("/DrugInfo/fcm")
+@RequestMapping("/fcm")
 @RequiredArgsConstructor
 public class FcmRestController {
 

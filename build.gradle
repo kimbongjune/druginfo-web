@@ -48,6 +48,8 @@ dependencies {
     //FCM 전송을 위한 의존성 주입
     implementation 'com.google.firebase:firebase-admin:9.1.1'
 
+    //뷰를 위한 타임리프 템플릿 엔진 의존성 주입
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 
 tasks.named('test') {

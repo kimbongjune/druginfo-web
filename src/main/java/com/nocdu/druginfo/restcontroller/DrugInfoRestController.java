@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/DrugInfo/drugsearch")
+@RequestMapping("/drugsearch")
 public class DrugInfoRestController {
 
     private static final Logger Logger = LoggerFactory.getLogger(DrugInfoRestController.class);
