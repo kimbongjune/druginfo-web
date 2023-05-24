@@ -20,4 +20,6 @@ public interface PillInfoRepository extends JpaRepository<PillInfoEntity, Long> 
     @Override
     Optional<PillInfoEntity> findById(Long aLong);
 
+    Long countBy();
+
 }

@@ -15,4 +15,7 @@ public interface DrugDetailInfoRepository extends JpaRepository<DrugDetailInfoEn
 
     @Override
     Optional<DrugDetailInfoEntity> findById(String s);
+
+    //데이터 전체의 개수를 구한다.
+    Long countBy();
 }
