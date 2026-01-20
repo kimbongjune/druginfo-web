@@ -30,7 +30,7 @@ public class DrugIngredientWriter implements ItemWriter<DrugIngredient> {
             try {
                 // Upsert by componentCode
                 Optional<DrugIngredient> existing = 
-                        drugIngredientRepository.findByComponentCode(ingredient.getComponentCode());
+                        drugIngredientRepository.findFirstByComponentCode(ingredient.getComponentCode());
 
                 if (existing.isPresent()) {
                     DrugIngredient e = existing.get();

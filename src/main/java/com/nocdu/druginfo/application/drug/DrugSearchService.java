@@ -36,7 +36,79 @@ public class DrugSearchService {
     private final DrugPriceRepository drugPriceRepository;
     private final com.nocdu.druginfo.domain.drug.repository.DrugIngredientRepository drugIngredientRepository;
 
-    // ... (중략) ...
+    /**
+     * 의약품 통합 검색 (이름, 제조사, 효능)
+     */
+    public Page<DrugSearchResponse> searchDrugs(DrugSearchRequest request, Pageable pageable) {
+        Page<DrugSearchResponse> responses = drugRepository.searchDrugs(request, pageable);
+        // 추가 정보 enrichment
+        return responses.map(response -> {
+            enrichWithAdditionalInfo(response, response.getItemSeq());
+            return response;
+        });
+    }
+
+    /**
+     * 낱알 식별 검색 (모양, 색상, 문구, 제형)
+     */
+    public Page<DrugSearchResponse> searchByIdentification(PillSearchRequest request, Pageable pageable) {
+        Page<DrugSearchResponse> responses = drugRepository.searchByIdentification(request, pageable);
+        // 추가 정보 enrichment
+        return responses.map(response -> {
+            enrichWithAdditionalInfo(response, response.getItemSeq());
+            return response;
+        });
+    }
+
+    /**
+     * 의약품 상세 조회 (품목기준코드)
+     */
+    public Optional<DrugSearchResponse> getDrugByItemSeq(String itemSeq) {
+        return drugRepository.findByItemSeq(itemSeq)
+                .map(drug -> {
+                    DrugSearchResponse response = DrugSearchResponse.from(drug);
+                    enrichWithAdditionalInfo(response, itemSeq);
+                    return response;
+                });
+    }
+
+    /**
+     * 의약품 총 개수 조회
+     */
+    public long countDrugs() {
+        return drugRepository.count();
+    }
+
+    /**
+     * 병용금기 정보 조회
+     */
+    public List<DrugSearchResponse.InteractionInfo> getInteractionsByItemSeq(String itemSeq) {
+        List<DrugInteraction> interactions = drugInteractionRepository.findByItemSeq(itemSeq);
+        return interactions.stream()
+                .map(DrugSearchResponse.InteractionInfo::from)
+                .toList();
+    }
+
+    /**
+     * DUR 경고 정보 조회 (연령금기, 임부금기, 노인주의 등)
+     */
+    public List<DrugSearchResponse.DurWarningInfo> getDurWarningsByItemSeq(String itemSeq) {
+        List<DrugDurWarning> warnings = drugDurWarningRepository.findByItemSeq(itemSeq);
+        return warnings.stream()
+                .map(DrugSearchResponse.DurWarningInfo::from)
+                .toList();
+    }
+
+    /**
+     * 약가 정보 조회
+     */
+    public Optional<DrugSearchResponse.PriceInfo> getPriceByItemSeq(String itemSeq) {
+        List<DrugPrice> prices = drugPriceRepository.findByItemSeq(itemSeq);
+        if (prices.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(DrugSearchResponse.PriceInfo.from(prices.get(0)));
+    }
 
     /**
      * 응답에 추가 정보 (DUR/약가/성분) 포함
