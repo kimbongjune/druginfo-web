@@ -1,0 +1,99 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /DrugInfo
+
+spring:
+  application:
+    name: druginfo-api
+  
+  # Database Configuration
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/druginfo?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: qwer123#
+  
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        show_sql: false
+    open-in-view: false
+  
+  # Spring Batch Configuration
+  batch:
+    jdbc:
+      initialize-schema: always
+    job:
+      enabled: false  # 수동 실행 (스케줄러 또는 API로 실행)
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    com.nocdu.druginfo: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+    org.springframework.batch: INFO
+
+# Public Data API Configuration
+openapi:
+  service-key: PGarApfpuY1YOjiqqzSf2rDH0jRgz4DG7JPgm2Une6+Y/IyWCjPB/kO+JGiqs3Od4iX9JZpHs7BU4YAHzv/9nQ==
+  
+  # 식품의약품안전처 APIs (기관코드: 1471000)
+  mfds:
+    base-url: http://apis.data.go.kr/1471000
+    endpoints:
+      # 의약품개요정보 - e약은요 (ID: 15075057)
+      drug-easy-info: /DrbEasyDrugInfoService/getDrbEasyDrugList
+      # 의약품 낱알식별 정보 (ID: 15057639)
+      drug-identification: /MdcinGrnIdntfcInfoService03/getMdcinGrnIdntfcInfoList03
+      # 의약품 제품 허가정보 (ID: 15095677)
+      drug-permit-info: /DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnDtlInq06
+      drug-permit-list: /DrugPrdtPrmsnInfoService07/getDrugPrdtPrmsnInq07
+      # DUR 품목정보 - 병용금기, 연령금기, 임부금기, 노인주의 (ID: 15059486)
+      dur-combined-taboo: /DURPrdlstInfoService03/getUsjntTabooInfoList03
+      dur-age-taboo: /DURPrdlstInfoService03/getSpcifyAgrdeTabooInfoList03
+      dur-pregnant-taboo: /DURPrdlstInfoService03/getPwnmTabooInfoList03
+      dur-elderly-caution: /DURPrdlstInfoService03/getOdsnAtentInfoList03
+      dur-duplicate-effect: /DURPrdlstInfoService03/getSeobangjeongPartitnAtentInfoList03
+
+  # 건강보험심사평가원 APIs (기관코드: B551182)
+  hira:
+    base-url: http://apis.data.go.kr/B551182
+    endpoints:
+      # 약가기준정보 조회서비스 (ID: 15054445)
+      drug-price-info: /dgamtCrtrInfoService1.2/getDgamtList
+      # 의약품 성분약효정보 조회서비스 (ID: 15021027)
+      ingredient-effect-info: /msupCmpnMeftInfoService/getMajorCmpnNmCdList
+
+# ETL Scheduler Configuration
+etl:
+  scheduler:
+    enabled: true
+    # 매주 화요일 새벽 3시에 실행 (cron: 초 분 시 일 월 요일)
+    cron: "0 0 3 * * TUE"
+
+# Springdoc Configuration (Swagger)
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+
+# FCM Configuration (Firebase Cloud Messaging)
+fcm:
+  project:
+    id: druginfo-94e17
+  package:
+    name: com.nocdu.druginformation
+  setting:
+    file:
+      name: druginfo-fcm-key.json
