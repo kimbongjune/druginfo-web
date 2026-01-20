@@ -92,8 +92,8 @@ public class DrugRepositoryImpl implements DrugRepositoryCustom {
     public Page<DrugSearchResponse> searchByIdentification(PillSearchRequest request, Pageable pageable) {
         BooleanBuilder whereClause = new BooleanBuilder();
 
-        // 모양 검색
-        whereClause.and(containsIfNotEmpty(ident.drugShape, request.getShape()));
+        // 모양 검색 (정확 일치)
+        whereClause.and(eqIfNotEmpty(ident.drugShape, request.getShape()));
 
         // 색상 검색 (통합 또는 개별)
         if (StringUtils.hasText(request.getColor())) {
@@ -112,12 +112,26 @@ public class DrugRepositoryImpl implements DrugRepositoryCustom {
         // 제형 검색
         whereClause.and(containsIfNotEmpty(ident.formCodeName, request.getFormCodeName()));
 
-        // 분할선 검색
+        // 분할선 검색 (정확 일치)
         if (StringUtils.hasText(request.getLine())) {
-            whereClause.and(
-                ident.lineFront.containsIgnoreCase(request.getLine())
-                    .or(ident.lineBack.containsIgnoreCase(request.getLine()))
-            );
+            String lineValue = request.getLine();
+            // "없음" 선택 시: 빈 값이거나 "없음"인 항목 검색
+            if ("없음".equals(lineValue)) {
+                whereClause.and(
+                    ident.lineFront.isNull()
+                        .or(ident.lineFront.eq(""))
+                        .or(ident.lineFront.eq("없음"))
+                        .or(ident.lineBack.isNull())
+                        .or(ident.lineBack.eq(""))
+                        .or(ident.lineBack.eq("없음"))
+                );
+            } else {
+                // 그 외: 정확 일치 검색
+                whereClause.and(
+                    ident.lineFront.eq(lineValue)
+                        .or(ident.lineBack.eq(lineValue))
+                );
+            }
         }
 
         // 분류명 검색

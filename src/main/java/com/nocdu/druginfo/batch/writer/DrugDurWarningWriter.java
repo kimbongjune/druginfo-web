@@ -33,8 +33,43 @@ public class DrugDurWarningWriter implements ItemWriter<DrugDurWarning> {
         for (DrugDurWarning warning : chunk) {
             try {
                 // Drug 엔티티와 연관관계 설정
-                Optional<Drug> drugOpt = drugRepository.findByItemSeq(warning.getItemSeq());
-                drugOpt.ifPresent(warning::setDrug);
+                Drug drug = null;
+                
+                // 1. itemSeq로 조회
+                if (warning.getItemSeq() != null && !warning.getItemSeq().isEmpty()) {
+                    Optional<Drug> drugOpt = drugRepository.findByItemSeq(warning.getItemSeq());
+                    if (drugOpt.isPresent()) {
+                        drug = drugOpt.get();
+                    }
+                }
+                
+                // 2. itemSeq 매칭 실패 시: 제품명 + 제조사명으로 조회
+                if (drug == null && warning.getItemName() != null && warning.getEntpName() != null) {
+                     Optional<Drug> drugOpt = drugRepository.findFirstByItemNameAndEntpName(
+                        warning.getItemName(), warning.getEntpName());
+                    if (drugOpt.isPresent()) {
+                        drug = drugOpt.get();
+                    }
+                }
+
+                // 3. 최후의 수단: 제품명만으로 조회
+                if (drug == null && warning.getItemName() != null) {
+                    Optional<Drug> drugOpt = drugRepository.findFirstByItemName(warning.getItemName());
+                    if (drugOpt.isPresent()) {
+                        drug = drugOpt.get();
+                    }
+                }
+                
+                if (drug != null) {
+                    warning.setDrug(drug);
+                    // Critical: Drug의 itemSeq로 동기화
+                    if (warning.getItemSeq() == null || warning.getItemSeq().isEmpty()) {
+                        warning.setItemSeq(drug.getItemSeq());
+                    }
+                } else {
+                    log.warn("Failed to find Drug linkage for DUR Warning: {}, Type: {}", 
+                            warning.getItemName(), warning.getTypeName());
+                }
 
                 // Upsert
                 Optional<DrugDurWarning> existing = drugDurWarningRepository

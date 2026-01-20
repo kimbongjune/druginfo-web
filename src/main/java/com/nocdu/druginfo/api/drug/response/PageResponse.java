@@ -29,7 +29,9 @@ public class PageResponse<T> {
         private int size;
         private long totalElements;
         private int totalPages;
+        @com.fasterxml.jackson.annotation.JsonProperty("isEnd")
         private boolean isEnd;
+        @com.fasterxml.jackson.annotation.JsonProperty("isFirst")
         private boolean isFirst;
     }
 
